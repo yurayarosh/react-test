@@ -1,0 +1,17 @@
+.to-do-list-item
+  display: flex
+  align-items: center
+  padding: 0px 10px
+  text-align: left
+  cursor: pointer
+  &__title
+    flex-grow: 1
+    padding: 10px 0
+    user-select: none
+  &__btn
+    width: 50px
+    &:hover
+      color: red
+  
+  &.is-done
+    background-color: #555
