@@ -3,6 +3,8 @@ import ToDoListItem from '../ToDoListItem/ToDoListItem'
 import './ToDoList.sass'
 
 export default function ToDoList({ list, update }) {
+  const itemsLeft = list.filter(item => !item.done).length
+
   function addToDoItem(e) {
     e.preventDefault()
     const input = e.target.querySelector('input')
@@ -48,6 +50,23 @@ export default function ToDoList({ list, update }) {
     })
   }
 
+  function checkAllItems(e) {
+    const wrap = e.target.closest('.to-do-list')
+    const listItems = [...wrap.querySelectorAll('.to-do-list-item')]
+
+    if (e.target.checked) {
+      list.forEach(item => { item.done = true })
+      listItems.forEach(item => { item.classList.add('is-done') })
+    } else {
+      list.forEach(item => { item.done = false })
+      listItems.forEach(item => { item.classList.remove('is-done') })
+    }
+
+    update({
+      toDoListItems: list
+    })
+  }
+
   return (
     <div className="to-do-list">
       <div className="to-do-list__input">
@@ -75,10 +94,19 @@ export default function ToDoList({ list, update }) {
 
       {
         list.length > 0 ?
-          <div className="to-do-list__btns">
-            <button className="btn" onClick={removeAllItems}>clear all</button>
-            <button className="btn" onClick={removeDoneItems}>clear done</button>
-          </div>
+          <>
+            <div className="to-do-list__checkbox">
+              <label>
+                <input type="checkbox" onChange={checkAllItems} />
+                check all
+              </label>
+              <div className="to-do-list__left">left {itemsLeft}</div>
+            </div>
+            <div className="to-do-list__btns">
+              <button className="btn" onClick={removeAllItems}>clear all</button>
+              <button className="btn" onClick={removeDoneItems}>clear done</button>
+            </div>
+          </>
           : null
       }
     </div>

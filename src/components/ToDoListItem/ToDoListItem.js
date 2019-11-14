@@ -14,6 +14,10 @@ export default function ToDoListItem(props) {
     list[index].done = !list[index].done;
     const parent = e.target.parentNode
     parent.classList.toggle('is-done')
+
+    update({
+      toDoListItems: list
+    })    
   }
 
   return(

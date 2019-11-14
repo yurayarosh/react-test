@@ -1,3 +1,5 @@
+@import ../../sass/helpers/mixins
+
 .to-do-list
   text-align: center
   &__input
@@ -11,3 +13,14 @@
   &__btns
     padding: 20px
     background-color: #333333
+  &__checkbox
+    text-align: left
+    +flex(flex-start, center)
+    label
+      display: block
+      padding: 20px
+      cursor: pointer
+      flex-grow: 1
+  &__left
+    padding-left: 30px
+    padding-right: 30px
