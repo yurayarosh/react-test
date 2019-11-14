@@ -5,7 +5,7 @@ import './ToDoList.sass'
 export default function ToDoList({ list, update }) {
   const itemsLeft = list.filter(item => !item.done).length
 
-  function addToDoItem(e) {
+  function handleSubmit(e) {
     e.preventDefault()
     const input = e.target.querySelector('input')
     const value = input.value
@@ -29,13 +29,13 @@ export default function ToDoList({ list, update }) {
     input.focus()
   }
 
-  function removeAllItems() {
+  function handleRemoveAllBtnClick() {
     update({
       toDoListItems: []
     })
   }
 
-  function removeDoneItems(e) {
+  function handleRemoveDoneBtnClick(e) {
     const filter = list.filter(item => !item.done)
 
     update({
@@ -50,7 +50,7 @@ export default function ToDoList({ list, update }) {
     })
   }
 
-  function checkAllItems(e) {
+  function handleCheckAllChange(e) {
     const wrap = e.target.closest('.to-do-list')
     const listItems = [...wrap.querySelectorAll('.to-do-list-item')]
 
@@ -70,7 +70,7 @@ export default function ToDoList({ list, update }) {
   return (
     <div className="to-do-list">
       <div className="to-do-list__input">
-        <form action="" onSubmit={addToDoItem}>
+        <form action="" onSubmit={handleSubmit}>
           <input className="input" type="text" />
           <button className="btn">add</button>
         </form>
@@ -78,17 +78,15 @@ export default function ToDoList({ list, update }) {
 
       <div className="to-do-list__list">
         {
-          list.map((item, i) => {
-            return (
+          list.map((item, i) => 
               <ToDoListItem
                 key={i}
                 className={item.done ? 'to-do-list-item is-done' : 'to-do-list-item'}
                 index={i}
                 title={item.title}
                 list={list}
-                update={update} />
-            )
-          })
+                update={update} />            
+          )
         }
       </div>
 
@@ -97,14 +95,14 @@ export default function ToDoList({ list, update }) {
           <>
             <div className="to-do-list__checkbox">
               <label>
-                <input type="checkbox" onChange={checkAllItems} />
+                <input type="checkbox" onChange={handleCheckAllChange} />
                 check all
               </label>
               <div className="to-do-list__left">left {itemsLeft}</div>
             </div>
             <div className="to-do-list__btns">
-              <button className="btn" onClick={removeAllItems}>clear all</button>
-              <button className="btn" onClick={removeDoneItems}>clear done</button>
+              <button className="btn" onClick={handleRemoveAllBtnClick}>clear all</button>
+              <button className="btn" onClick={handleRemoveDoneBtnClick}>clear done</button>
             </div>
           </>
           : null

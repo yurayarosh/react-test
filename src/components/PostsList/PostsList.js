@@ -2,10 +2,11 @@ import React from 'react'
 import Post from '../Post/Post'
 import './PostList.sass'
 
-export default function PostsList({ list, posts, update, postsShowNumber }) {
-  const LOAD_MORE = list.length < posts.length  
+export default function PostsList(props) {
+  const { list, posts, update, postsShowNumber } = props
+  const LOAD_MORE = list.length < posts.length
 
-  function filterPosts(e) {
+  function handleInputChange(e) {
     const value = e.target.value.toUpperCase()
     const filter = posts.filter(post => {
       return post.title.toUpperCase().indexOf(value) > -1
@@ -24,31 +25,31 @@ export default function PostsList({ list, posts, update, postsShowNumber }) {
     })
   }
 
-  function sortNewestFirst() {
+  function handleSortByNewBtnClick() {
     setPostsDate()
     list
       .sort((a, b) => b.dateFormat - a.dateFormat)
     update({ posts: list })
   }
 
-  function sortOldestFirst() {
+  function handleSortByOldClick() {
     setPostsDate()
     list
       .sort((a, b) => a.dateFormat - b.dateFormat)
     update({ posts: list })
   }
 
-  function sortByName() {
+  function handleSortByNameClick() {
     list
       .sort((a, b) => a.title.localeCompare(b.title))
     update({ posts: list })
   }
 
-  function loadMorePosts() {
+  function handleLoadMoreClick() {
     const loadPostsNumber = 1
     const index = list.length + loadPostsNumber
     const updList = [...posts].slice(0, index)
-    
+
     update({
       posts: updList,
       postsShowNumber: index
@@ -58,12 +59,12 @@ export default function PostsList({ list, posts, update, postsShowNumber }) {
   return (
     <div className="posts">
       <div className="posts__search">
-        <input className="input" type="text" onChange={filterPosts} />
+        <input className="input" type="text" onChange={handleInputChange} />
       </div>
       <div className="posts__btns">
-        <button className="btn" onClick={sortNewestFirst}>new</button>
-        <button className="btn" onClick={sortOldestFirst}>old</button>
-        <button className="btn" onClick={sortByName}>name</button>
+        <button className="btn" onClick={handleSortByNewBtnClick}>new</button>
+        <button className="btn" onClick={handleSortByOldClick}>old</button>
+        <button className="btn" onClick={handleSortByNameClick}>name</button>
       </div>
       <div className="posts__posts">
         {
@@ -79,7 +80,7 @@ export default function PostsList({ list, posts, update, postsShowNumber }) {
         {
           LOAD_MORE ?
             <div className="posts__btn">
-              <button className="btn" onClick={loadMorePosts}>load more</button>
+              <button className="btn" onClick={handleLoadMoreClick}>load more</button>
             </div>
             : null
         }
