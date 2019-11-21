@@ -1,6 +1,10 @@
 import React from 'react'
 import ToDoListItem from '../ToDoListItem/ToDoListItem'
 import './ToDoList.sass'
+import {
+  TransitionGroup,
+  CSSTransition
+} from "react-transition-group"
 
 export default function ToDoList({ list, update }) {
   const itemsLeft = list.filter(item => !item.done).length
@@ -76,19 +80,23 @@ export default function ToDoList({ list, update }) {
         </form>
       </div>
 
-      <div className="to-do-list__list">
+      <TransitionGroup className="to-do-list__list">
         {
-          list.map((item, i) => 
+          list.map((item, i) =>
+            <CSSTransition
+              key={i}
+              classNames="fade"
+              timeout={300}>
               <ToDoListItem
-                key={i}
                 className={item.done ? 'to-do-list-item is-done' : 'to-do-list-item'}
                 index={i}
                 title={item.title}
                 list={list}
-                update={update} />            
+                update={update} />
+            </CSSTransition>
           )
         }
-      </div>
+      </TransitionGroup>
 
       {
         list.length > 0 ?
