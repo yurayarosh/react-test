@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react'
+import React, { useState } from 'react'
 import Header from '../components/Header/Header'
 import Footer from '../components/Footer/Footer'
 import { Transition } from 'react-transition-group'

@@ -1,46 +1,18 @@
 import React, { Component } from 'react';
 import posts from './data/posts'
+import questions from './data/questions'
 import './sass/app.sass'
-import { TransitionGroup, CSSTransition } from 'react-transition-group'
+// import { TransitionGroup, CSSTransition } from 'react-transition-group'
 import {
   BrowserRouter as Router,
   Switch,
   Route,
-  useLocation
+  // useLocation
 } from 'react-router-dom'
 import Home from './pages/home/home'
 import About from './pages/about/about'
 import Blog from './pages/blog/blog'
-
-const AnimationApp = (props) => {
-  const location = useLocation()
-  const { state, updateState } = props
-
-  return (
-    <TransitionGroup>
-      <CSSTransition
-        key={location.key}
-        classNames="fade"
-        timeout={300}>
-        <Switch>
-          <Route path="/about">
-            <About />
-          </Route>
-          <Route path="/blog">
-            <Blog
-              state={state}
-              updateState={updateState} />
-          </Route>
-          <Route path="/">
-            <Home
-              state={state}
-              updateState={updateState} />
-          </Route>
-        </Switch>
-      </CSSTransition>
-    </TransitionGroup>
-  )
-}
+import QuestionsTest from './pages/questions-test/questions-test'
 
 class App extends Component {
   constructor(props) {
@@ -48,7 +20,12 @@ class App extends Component {
     this.state = {
       postsShowNumber: 2,
       posts: [...posts].slice(0, 2),
-      toDoListItems: []
+      toDoListItems: [],
+      testQuestions: {
+        current: 0,
+        isFinished: false,
+        list: questions
+      }
     }
   }
 
@@ -59,10 +36,12 @@ class App extends Component {
   render() {
     return (
       <Router>
-        {/* <AnimationApp
-          state={this.state}
-          updateState={this.updateState.bind(this)}/> */}
         <Switch>
+          <Route path="/QuestionsTest">
+            <QuestionsTest
+              state={this.state}
+              updateState={this.updateState.bind(this)} />
+          </Route>
           <Route path="/about">
             <About />
           </Route>
