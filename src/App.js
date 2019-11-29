@@ -30,14 +30,14 @@ class App extends Component {
   }
 
   updateState(state) {
-    this.setState({ ...this.state, ...state })
+    this.setState(state)
   }
 
   render() {
     return (
       <Router>
         <Switch>
-          <Route path="/QuestionsTest">
+          <Route path="/questions-test">
             <QuestionsTest
               state={this.state}
               updateState={this.updateState.bind(this)} />

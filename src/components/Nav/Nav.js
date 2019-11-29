@@ -10,6 +10,6 @@ export default () =>
       <li><Link to="/">Home</Link></li>
       <li><Link to="/about">About</Link></li>
       <li><Link to="/blog">Blog</Link></li>
-      <li><Link to="/QuestionsTest">QuestionsTest</Link></li>
+      <li><Link to="/questions-test">QuestionsTest</Link></li>
     </ul>
   </nav>
