@@ -1,37 +1,41 @@
 import React from 'react'
 import './Question.sass'
+import { IS_CORRECT, IS_INCORRECT } from '../../helpers/constants'
+
+let allowAnswer = true
 
 export default props => {
-  const { questions, current, update, state } = props
-  let allowAnswer = true
+  const { questions, current, update, state } = props  
 
-  function handleClick(answerId, e) {
-    if (!allowAnswer) return
+  function handleClick(answer) {    
+    if (!allowAnswer) return    
     if (current > questions.length) return
     allowAnswer = false
     const questionsList = [...state.testQuestions.list]
-    questionsList[current].answer = answerId
+    questionsList[current].currentAnswer = answer.id
+    answer.isHandling = true
 
-    const cls = []
-    answerId === state.testQuestions.list[current].rightAnswer
-      ? cls.push('is-correct')
-      : cls.push('is-incorrect')
+    update({
+      testQuestions: {
+        ...state.testQuestions
+      }
+    })   
 
     const next = current + 1
     const timeout = window.setTimeout(() => {
+      answer.isHandling = false
       if (current === questions.length - 1) {
         update({
           testQuestions: {
-            current: state.testQuestions.current,
+            ...state.testQuestions,
             isFinished: true,
-            list: state.testQuestions.list
           }
         })
       } else {
         update({
           testQuestions: {
+            ...state.testQuestions,
             current: next,
-            isFinished: state.testQuestions.isFinished,
             list: questionsList
           }
         })
@@ -40,8 +44,6 @@ export default props => {
       allowAnswer = true
       window.clearTimeout(timeout)
     }, 500)
-
-    e.target.classList.add(cls.join(' '))
   }
 
   return (
@@ -53,15 +55,26 @@ export default props => {
               <h3 className="title title--h3">{questions[current].title}?</h3>
             </div>
 
-            <div className="question__questions">
+            <div className="question__answers">
               {
-                questions[current].questions.map((question, i) =>
-                  <div
-                    key={i}
-                    className="question__question"
-                    onClick={handleClick.bind(this, question.id)}
-                  >{`${i + 1}. ${question.title}`}</div>
-                )
+                questions[current].answers.map((answer, i) => {
+                  const correct = answer.id === questions[current].rightAnswer
+                  const className = ['question__answer']
+
+                  if (answer.isHandling && correct) {
+                    className.push(IS_CORRECT)                    
+                  } else if(answer.isHandling && !correct) {
+                    className.push(IS_INCORRECT)
+                  }
+
+                  return (
+                    <div
+                      key={i}
+                      className={className.join(' ')}
+                      onClick={handleClick.bind(this, answer)}
+                    >{`${i + 1}. ${answer.title}`}</div>
+                  )
+                })
               }
             </div>
           </>
@@ -71,12 +84,12 @@ export default props => {
               <h2 className="title title--h2">Congratulations all done</h2>
             </div>
             {
-              questions.map((question, i) => {
-                const correct = question.answer === question.rightAnswer
-                const cls = []
-                correct ? cls.push('is-correct') : cls.push('is-incorrect')
+              questions.map((question, i) => {                              
+                const correct = question.currentAnswer === question.rightAnswer
+                const className = []
+                correct ? className.push() : className.push(IS_INCORRECT)
                 return (
-                  <div key={i} className={`question__result ${cls.join(' ')}`}>
+                  <div key={i} className={`question__result ${className.join(' ')}`}>
                     {i + 1}. &nbsp;
                     {question.title}: {correct ? 'correct' : 'incorrect'}
                   </div>
