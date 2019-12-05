@@ -2,15 +2,76 @@
 @import ../../sass/helpers/mixins
 
 .header
+  $this: &
   position: fixed
   z-index: 10
   left: 0
   right: 0
-  top: 0
-  
+  top: 0  
   padding-left: 15px
   padding-right: 15px
   background-color: $white
   &__inner
     height: 80px
-    +flex(center, center)
+    text-align: right
+    padding-top: 10px
+    padding-bottom: 10px
+    // +flex(center, center)
+  &__nav
+    position: fixed
+    z-index: 15
+    background-color: rgba(#000, .7)
+    top: 0
+    bottom: 0
+    left: 0
+    right: 0
+    text-align: left
+    +hidden
+    +tr(opacity .3s, visibility .3s)
+    &.is-open
+      +visible
+      #{$this}__nav-in
+        transform: translate(0, 0)
+  &__nav-in
+    background-color: #ffffff
+    height: 100%
+    width: 300px
+    overflow: auto
+    padding: 15px
+    transform: translate(-100%, 0)
+    +tr(transform .3s)
+
+
+.burger 
+  display: block
+  width: 28px
+  height: 28px
+  position: relative
+  +tr(transform .3s)
+  span:after, span:before 
+    content: ""
+    position: absolute
+    left: 0
+  span:after
+    top: 5px
+  span:before
+    bottom: 5px
+  span 
+    display: block
+  span, span:after, span:before
+    width: 100%
+    height: 2px
+    background-color: currentColor
+    backface-visibility: hidden
+    border-radius: 2px
+    +tr(transform .3s)
+  &.is-open
+    z-index: 20
+    transform: translate(250px, 0)
+  &.is-open span 
+    background-color: transparent
+  &.is-open span:before 
+    transform: rotate(45deg) translate(-7px,-5px)
+  &.is-open span:after 
+    transform: rotate(-45deg) translate(-6px,4px)
+

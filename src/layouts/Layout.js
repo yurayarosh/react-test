@@ -3,7 +3,7 @@ import Header from '../components/Header/Header'
 import Footer from '../components/Footer/Footer'
 import { Transition } from 'react-transition-group'
 
-export default (props) => {
+export default props => {
   const [inProp] = useState(false)
 
   function handleEnter() {

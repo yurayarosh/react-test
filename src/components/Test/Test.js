@@ -17,7 +17,7 @@ export default props => {
   return (
     <div className="test">
       <div className="test__title">
-        <h2 className="title title--h2">Answer to questions</h2>
+        <h2 className="title title--h2">Answer to the questions</h2>
       </div>
 
       <div className="test__question">

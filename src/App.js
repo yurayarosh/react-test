@@ -18,6 +18,7 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      menuOpen: false,
       postsShowNumber: 2,
       posts: [...posts].slice(0, 2),
       toDoListItems: [],

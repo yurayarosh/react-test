@@ -5,10 +5,10 @@ import { IS_CORRECT, IS_INCORRECT } from '../../helpers/constants'
 let allowAnswer = true
 
 export default props => {
-  const { questions, current, update, state } = props  
+  const { questions, current, update, state } = props
 
-  function handleClick(answer) {    
-    if (!allowAnswer) return    
+  function handleClick(answer) {
+    if (!allowAnswer) return
     if (current > questions.length) return
     allowAnswer = false
     const questionsList = [...state.testQuestions.list]
@@ -58,12 +58,12 @@ export default props => {
             <div className="question__answers">
               {
                 questions[current].answers.map((answer, i) => {
-                  const correct = answer.id === questions[current].rightAnswer
+                  const isCorrect = answer.id === questions[current].rightAnswer
                   const className = ['question__answer']
 
-                  if (answer.isHandling && correct) {
-                    className.push(IS_CORRECT)                    
-                  } else if(answer.isHandling && !correct) {
+                  if (answer.isHandling && isCorrect) {
+                    className.push(IS_CORRECT)
+                  } else if(answer.isHandling && !isCorrect) {
                     className.push(IS_INCORRECT)
                   }
 
@@ -81,17 +81,20 @@ export default props => {
           :
           <div className="question__done">
             <div className="question__title">
-              <h2 className="title title--h2">Congratulations all done</h2>
+              <h2 className="title title--h2">Congratulations! All done</h2>
             </div>
             {
-              questions.map((question, i) => {                              
-                const correct = question.currentAnswer === question.rightAnswer
+              questions.map((question, i) => {
+                const isCorrect = question.currentAnswer === question.rightAnswer
                 const className = []
-                correct ? className.push() : className.push(IS_INCORRECT)
+                isCorrect ? className.push(IS_CORRECT) : className.push(IS_INCORRECT)
+                const [rightAnswer] = question.answers
+                  .filter(answer => answer.id === question.rightAnswer)
+                
                 return (
                   <div key={i} className={`question__result ${className.join(' ')}`}>
                     {i + 1}. &nbsp;
-                    {question.title}: {correct ? 'correct' : 'incorrect'}
+                    {question.title}: {isCorrect ? 'correct' : 'incorrect'} ({rightAnswer.title})
                   </div>
                 )
               })
