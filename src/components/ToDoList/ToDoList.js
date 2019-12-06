@@ -88,7 +88,7 @@ export default function ToDoList({ list, update }) {
               classNames="fade"
               timeout={300}>
               <ToDoListItem
-                className={item.done ? 'to-do-list-item is-done' : 'to-do-list-item'}
+                // className={item.done ? 'to-do-list-item is-done' : 'to-do-list-item'}
                 index={i}
                 title={item.title}
                 list={list}

@@ -12,8 +12,6 @@ export default function ToDoListItem(props) {
 
   function handleItemClick(e) {
     list[index].done = !list[index].done;
-    const parent = e.target.parentNode
-    parent.classList.toggle('is-done')
 
     update({
       toDoListItems: list
@@ -21,7 +19,9 @@ export default function ToDoListItem(props) {
   }
 
   return(
-    <div className={className || 'to-do-list-item'}>
+    <div 
+      className={list[index] && list[index].done ? 'to-do-list-item is-done' : 'to-do-list-item'}
+      >
       <div className="to-do-list-item__title" onClick={handleItemClick}>{title}</div>
       <button className="to-do-list-item__btn" onClick={handleItemDeleteClick}>x</button>
     </div>
