@@ -2,7 +2,7 @@ import React from 'react'
 import './ToDoListItem.sass'
 
 export default function ToDoListItem(props) {
-  const { index, title, list, className, update } = props
+  const { index, title, list, update } = props
   function handleItemDeleteClick() {
     list.splice(index, 1)
     update({

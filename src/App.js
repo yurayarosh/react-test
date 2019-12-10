@@ -13,6 +13,7 @@ import Home from './pages/home/home'
 import About from './pages/about/about'
 import Blog from './pages/blog/blog'
 import QuestionsTest from './pages/questions-test/questions-test'
+import Layout from './layouts/Layout'
 
 class App extends Component {
   constructor(props) {
@@ -37,26 +38,28 @@ class App extends Component {
   render() {
     return (
       <Router>
-        <Switch>
-          <Route path="/questions-test">
-            <QuestionsTest
-              state={this.state}
-              updateState={this.updateState.bind(this)} />
-          </Route>
-          <Route path="/about">
-            <About />
-          </Route>
-          <Route path="/blog">
-            <Blog
-              state={this.state}
-              updateState={this.updateState.bind(this)} />
-          </Route>
-          <Route path="/">
-            <Home
-              state={this.state}
-              updateState={this.updateState.bind(this)} />
-          </Route>
-        </Switch>
+        <Layout>
+          <Switch>
+            <Route path="/questions-test">
+              <QuestionsTest
+                state={this.state}
+                updateState={this.updateState.bind(this)} />
+            </Route>
+            <Route path="/about">
+              <About />
+            </Route>
+            <Route path="/blog">
+              <Blog
+                state={this.state}
+                updateState={this.updateState.bind(this)} />
+            </Route>
+            <Route path="/">
+              <Home
+                state={this.state}
+                updateState={this.updateState.bind(this)} />
+            </Route>
+          </Switch>
+        </Layout>
       </Router>
     );
   }
