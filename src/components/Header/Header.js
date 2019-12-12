@@ -1,30 +1,31 @@
 import React, { useState } from 'react'
 import Nav from '../Nav/Nav'
-import classes from './Header.module.sass'
+import './Header.sass'
+import { IS_OPEN, IS_ACTIVE } from '../../helpers/constants'
 // import { IS_OPEN } from '../../helpers/constants'
 
 export default () => {
-  let [isOpen, setOpen] = useState(false)
+  const [isOpen, setOpen] = useState(false)
 
   function handleBurgerClick() {
-    setOpen(isOpen = !isOpen)
+    setOpen(!isOpen)
   }
   return (
-    <header className={classes['header']}>
-      <div className={classes['header__inner']}>
-        <div className={isOpen ? `${classes['header__nav']} ${classes['is-open']}` : classes['header__nav']}>
-          <div className={classes['header__nav-in']}>
+    <header className="header">
+      <div className="header__inner">
+        <div className={isOpen ? `header__nav header__nav--${IS_OPEN}` : 'header__nav'}>
+          <div className="header__nav-in">
             <Nav
               onLinkClick={handleBurgerClick}
             />
           </div>
           <div
-            className={classes['header__nav-overlay']}
+            className="header__nav-overlay"
             onClick={handleBurgerClick}></div>
         </div>
-        <div className={classes['header__burger']}>
+        <div className="header__burger">
           <button
-            className={isOpen ? `${classes.burger} ${classes['is-open']}` : classes.burger}
+            className={isOpen ? `burger burger--${IS_ACTIVE}` : 'burger'}
             onClick={handleBurgerClick}
           ><span></span></button>
         </div>

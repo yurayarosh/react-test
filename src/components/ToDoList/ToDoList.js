@@ -5,6 +5,8 @@ import {
   TransitionGroup,
   CSSTransition
 } from "react-transition-group"
+import Btn from '../Btn/Btn'
+import Input from '../Input/Input'
 
 export default function ToDoList({ list, update }) {
   const itemsLeft = list.filter(item => !item.done).length
@@ -73,10 +75,13 @@ export default function ToDoList({ list, update }) {
 
   return (
     <div className="to-do-list">
-      <div className="to-do-list__input">
+      <div className="to-do-list__form">
         <form action="" onSubmit={handleSubmit}>
-          <input className="input" type="text" />
-          <button className="btn">add</button>
+            <Input></Input>
+            {/* <div className="input">
+              <input type="text"/>
+            </div> */}
+            <Btn>add</Btn>
         </form>
       </div>
 
@@ -109,8 +114,13 @@ export default function ToDoList({ list, update }) {
               <div className="to-do-list__left">left {itemsLeft}</div>
             </div>
             <div className="to-do-list__btns">
-              <button className="btn" onClick={handleRemoveAllBtnClick}>clear all</button>
-              <button className="btn" onClick={handleRemoveDoneBtnClick}>clear done</button>
+              <Btn
+                onClickHandler={handleRemoveAllBtnClick}
+              >clear all</Btn>
+              <Btn
+                mod="btn--secondary"
+                onClickHandler={handleRemoveDoneBtnClick}
+              >clear done</Btn>
             </div>
           </>
           : null

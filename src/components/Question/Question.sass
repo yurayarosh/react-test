@@ -7,16 +7,21 @@
     padding-bottom: 10px
     &:hover
       background-color: #eee
-    &.is-correct
+    &--correct
       background-color: lightgreen
-    &.is-incorrect
+      &:hover
+        background-color: lightgreen
+    &--incorrect
       background-color: lightcoral
+      &:hover
+        background-color: lightcoral
+    
   &__result
     padding-top: 10px
     padding-bottom: 10px
-    &.is-correct
+    &--correct
       background-color: lightgreen
-    &.is-incorrect
+    &--incorrect
       background-color: lightcoral
   &__done
     margin-bottom: 10px

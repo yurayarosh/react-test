@@ -62,10 +62,13 @@ export default props => {
                   const className = ['question__answer']
 
                   if (answer.isHandling && isCorrect) {
-                    className.push(IS_CORRECT)
+                    className.push(`question__answer--${IS_CORRECT}`)
                   } else if(answer.isHandling && !isCorrect) {
-                    className.push(IS_INCORRECT)
+                    className.push(`question__answer--${IS_INCORRECT}`)
                   }
+
+                  console.log(className);
+                  
 
                   return (
                     <div
@@ -87,7 +90,7 @@ export default props => {
               questions.map((question, i) => {
                 const isCorrect = question.currentAnswer === question.rightAnswer
                 const className = []
-                isCorrect ? className.push(IS_CORRECT) : className.push(IS_INCORRECT)
+                isCorrect ? className.push(`question__result--${IS_CORRECT}`) : className.push(`question__result--${IS_INCORRECT}`)
                 const [rightAnswer] = question.answers
                   .filter(answer => answer.id === question.rightAnswer)
                 

@@ -13,6 +13,7 @@ import Home from './pages/home/home'
 import About from './pages/about/about'
 import Blog from './pages/blog/blog'
 import QuestionsTest from './pages/questions-test/questions-test'
+import Auth from './pages/auth/Auth'
 import Layout from './layouts/Layout'
 
 class App extends Component {
@@ -40,6 +41,11 @@ class App extends Component {
       <Router>
         <Layout>
           <Switch>
+          <Route path="/auth">
+              <Auth
+                state={this.state}
+                updateState={this.updateState.bind(this)} />
+            </Route>
             <Route path="/questions-test">
               <QuestionsTest
                 state={this.state}

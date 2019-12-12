@@ -1,0 +1,22 @@
+@import ../../sass/helpers/variables
+@import ../../sass/helpers/mixins
+
+.btn
+  display: inline-block
+  padding: .25em 1em
+  height: em(40)
+  text-align: center
+  background-color: $black
+  color: $white
+  text-transform: uppercase
+  border: 2px solid $black
+  border-radius: 3px
+  &--secondary
+    background-color: $secondary
+    border-color: $secondary
+  &--disabled
+    opacity: 0.5
+    pointer-events: none
+  &--full
+    min-width: 0
+    width: 100%

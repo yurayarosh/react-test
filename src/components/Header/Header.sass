@@ -27,7 +27,7 @@
     +flex
     +hidden
     +tr(opacity .3s, visibility .3s)
-    &.is-open
+    &--open
       +visible
       #{$this}__nav-in
         transform: translate(0, 0)
@@ -73,13 +73,13 @@
     backface-visibility: hidden
     border-radius: 2px
     +tr(transform .3s)
-  &.is-open
+  &--active 
     z-index: 20
     transform: translate(250px, 0)
-  &.is-open span 
-    background-color: transparent
-  &.is-open span:before 
-    transform: rotate(45deg) translate(-7px,-5px)
-  &.is-open span:after 
-    transform: rotate(-45deg) translate(-6px,4px)
+    span
+      background-color: transparent
+      &::before
+        transform: rotate(45deg) translate(-7px,-5px)
+      &::after
+        transform: rotate(-45deg) translate(-6px,4px)
 

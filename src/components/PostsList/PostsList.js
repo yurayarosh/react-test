@@ -1,12 +1,14 @@
 import React from 'react'
 import Post from '../Post/Post'
 import './PostList.sass'
+import Input from '../Input/Input';
+import Btn from '../Btn/Btn';
 
 export default function PostsList(props) {
   const { list, posts, update, postsShowNumber } = props
   const LOAD_MORE = list.length < posts.length
 
-  function handleInputChange(e) {
+  function handleInputChange(props, e) {    
     const value = e.target.value.toUpperCase()
     const filter = posts.filter(post => {
       return post.title.toUpperCase().indexOf(value) > -1
@@ -59,12 +61,14 @@ export default function PostsList(props) {
   return (
     <div className="posts">
       <div className="posts__search">
-        <input className="input" type="text" onChange={handleInputChange} />
+        <Input
+          onChangeHandler={handleInputChange}
+        />
       </div>
       <div className="posts__btns">
-        <button className="btn" onClick={handleSortByNewBtnClick}>new</button>
-        <button className="btn" onClick={handleSortByOldClick}>old</button>
-        <button className="btn" onClick={handleSortByNameClick}>name</button>
+        <Btn onClickHandler={handleSortByNewBtnClick}>new</Btn>
+        <Btn onClickHandler={handleSortByOldClick}>old</Btn>
+        <Btn onClickHandler={handleSortByNameClick}>name</Btn>
       </div>
       <div className="posts__posts">
         {
@@ -80,7 +84,7 @@ export default function PostsList(props) {
         {
           LOAD_MORE ?
             <div className="posts__btn">
-              <button className="btn" onClick={handleLoadMoreClick}>load more</button>
+              <Btn onClickHandler={handleLoadMoreClick}>load more</Btn>
             </div>
             : null
         }
