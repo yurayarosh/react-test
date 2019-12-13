@@ -7,7 +7,7 @@ const validate = (input, constraints) => {
   let isValid = false
 
   if (constraints.minLength && !isValid) {
-    isValid = input.value.length >= constraints.minLength
+    isValid = input.value.trim().length >= constraints.minLength
   }
 
   if (constraints.email && !isValid) {

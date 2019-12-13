@@ -1,10 +1,7 @@
 import React from 'react'
 import ToDoListItem from '../ToDoListItem/ToDoListItem'
 import './ToDoList.sass'
-import {
-  TransitionGroup,
-  CSSTransition
-} from "react-transition-group"
+import { TransitionGroup, CSSTransition } from 'react-transition-group'
 import Btn from '../Btn/Btn'
 import Input from '../Input/Input'
 
@@ -23,13 +20,13 @@ export default function ToDoList({ list, update }) {
 
     const itemState = {
       title: value,
-      done: false
+      done: false,
     }
 
     const updList = [...list, itemState]
 
     update({
-      toDoListItems: updList
+      toDoListItems: updList,
     })
     input.value = ''
     input.focus()
@@ -37,7 +34,7 @@ export default function ToDoList({ list, update }) {
 
   function handleRemoveAllBtnClick() {
     update({
-      toDoListItems: []
+      toDoListItems: [],
     })
   }
 
@@ -45,7 +42,7 @@ export default function ToDoList({ list, update }) {
     const filter = list.filter(item => !item.done)
 
     update({
-      toDoListItems: filter
+      toDoListItems: filter,
     })
 
     const wrap = e.target.closest('.to-do-list')
@@ -61,15 +58,23 @@ export default function ToDoList({ list, update }) {
     const listItems = [...wrap.querySelectorAll('.to-do-list-item')]
 
     if (e.target.checked) {
-      list.forEach(item => { item.done = true })
-      listItems.forEach(item => { item.classList.add('is-done') })
+      list.forEach(item => {
+        item.done = true
+      })
+      listItems.forEach(item => {
+        item.classList.add('is-done')
+      })
     } else {
-      list.forEach(item => { item.done = false })
-      listItems.forEach(item => { item.classList.remove('is-done') })
+      list.forEach(item => {
+        item.done = false
+      })
+      listItems.forEach(item => {
+        item.classList.remove('is-done')
+      })
     }
 
     update({
-      toDoListItems: list
+      toDoListItems: list,
     })
   }
 
@@ -77,54 +82,45 @@ export default function ToDoList({ list, update }) {
     <div className="to-do-list">
       <div className="to-do-list__form">
         <form action="" onSubmit={handleSubmit}>
-            <Input></Input>
-            {/* <div className="input">
+          <Input></Input>
+          {/* <div className="input">
               <input type="text"/>
             </div> */}
-            <Btn>add</Btn>
+          <Btn>add</Btn>
         </form>
       </div>
 
       <TransitionGroup className="to-do-list__list">
-        {
-          list.map((item, i) =>
-            <CSSTransition
-              key={i}
-              classNames="fade"
-              timeout={300}>
-              <ToDoListItem
-                // className={item.done ? 'to-do-list-item is-done' : 'to-do-list-item'}
-                index={i}
-                title={item.title}
-                list={list}
-                update={update} />
-            </CSSTransition>
-          )
-        }
+        {list.map((item, i) => (
+          <CSSTransition key={i} classNames="fade" timeout={300}>
+            <ToDoListItem
+              // className={item.done ? 'to-do-list-item is-done' : 'to-do-list-item'}
+              index={i}
+              title={item.title}
+              list={list}
+              update={update}
+            />
+          </CSSTransition>
+        ))}
       </TransitionGroup>
 
-      {
-        list.length > 0 ?
-          <>
-            <div className="to-do-list__checkbox">
-              <label>
-                <input type="checkbox" onChange={handleCheckAllChange} />
-                check all
-              </label>
-              <div className="to-do-list__left">left {itemsLeft}</div>
-            </div>
-            <div className="to-do-list__btns">
-              <Btn
-                onClickHandler={handleRemoveAllBtnClick}
-              >clear all</Btn>
-              <Btn
-                mod="btn--secondary"
-                onClickHandler={handleRemoveDoneBtnClick}
-              >clear done</Btn>
-            </div>
-          </>
-          : null
-      }
+      {list.length > 0 ? (
+        <>
+          <div className="to-do-list__checkbox">
+            <label>
+              <input type="checkbox" onChange={handleCheckAllChange} />
+              check all
+            </label>
+            <div className="to-do-list__left">left {itemsLeft}</div>
+          </div>
+          <div className="to-do-list__btns">
+            <Btn onClickHandler={handleRemoveAllBtnClick}>clear all</Btn>
+            <Btn mod="btn--secondary" onClickHandler={handleRemoveDoneBtnClick}>
+              clear done
+            </Btn>
+          </div>
+        </>
+      ) : null}
     </div>
   )
 }

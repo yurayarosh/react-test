@@ -1,7 +1,8 @@
 import React from 'react'
 import './Test.sass'
-import Question from '../Question/Question';
+import Question from '../Question/Question'
 import testQuestions from '../../data/questions'
+import Btn from '../Btn/Btn'
 
 export default props => {
   const { questions, currentQuestion, update, state } = props
@@ -10,8 +11,8 @@ export default props => {
       testQuestions: {
         current: 0,
         isFinished: false,
-        list: testQuestions
-      }
+        list: testQuestions,
+      },
     })
   }
   return (
@@ -21,24 +22,17 @@ export default props => {
       </div>
 
       <div className="test__question">
-        <Question
-          questions={questions}
-          current={currentQuestion}
-          update={update}
-          state={state}
-        />
+        <Question questions={questions} current={currentQuestion} update={update} state={state} />
 
-        {
-          !state.testQuestions.isFinished ?
-            <div className="test__question-bottom">
-              {`${currentQuestion + 1} from ${questions.length}`}
-            </div>
-            : 
-            <div className="test__question-bottom">
-              <button className="btn" onClick={handleBtnClick}>try again</button>
-            </div>
-        }
-
+        {!state.testQuestions.isFinished ? (
+          <div className="test__question-bottom">
+            {`${currentQuestion + 1} from ${questions.length}`}
+          </div>
+        ) : (
+          <div className="test__question-bottom">
+            <Btn onClickHandler={handleBtnClick}>try again</Btn>
+          </div>
+        )}
       </div>
     </div>
   )

@@ -134,5 +134,14 @@
     "presets": [
       "react-app"
     ]
+  },
+  "prettier": {
+    "printWidth": 100,
+    "trailingComma": "es5",
+    "semi": false,
+    "singleQuote": true
+  },
+  "devDependencies": {
+    "prettier": "^1.19.1"
   }
 }

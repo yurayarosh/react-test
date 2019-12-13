@@ -15,19 +15,17 @@ export default () => {
       <div className="header__inner">
         <div className={isOpen ? `header__nav header__nav--${IS_OPEN}` : 'header__nav'}>
           <div className="header__nav-in">
-            <Nav
-              onLinkClick={handleBurgerClick}
-            />
+            <Nav onLinkClick={handleBurgerClick} />
           </div>
-          <div
-            className="header__nav-overlay"
-            onClick={handleBurgerClick}></div>
+          <div className="header__nav-overlay" onClick={handleBurgerClick}></div>
         </div>
         <div className="header__burger">
           <button
             className={isOpen ? `burger burger--${IS_ACTIVE}` : 'burger'}
             onClick={handleBurgerClick}
-          ><span></span></button>
+          >
+            <span></span>
+          </button>
         </div>
       </div>
     </header>

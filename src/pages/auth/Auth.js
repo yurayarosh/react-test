@@ -4,16 +4,12 @@ import Form from '../../components/Form/Form'
 import validate from '../../helpers/validation'
 
 export default () => {
-  const handleInputChange = ({
-    name,
-    constraints,
-    errors,
-    setFormErrors,
-    setInputError,
-    setInputTouch
-  }, e) => {
+  const handleInputChange = (
+    { name, constraints, errors, setFormErrors, setInputError, setInputTouch },
+    e
+  ) => {
     setInputTouch(true)
- 
+
     const isValid = validate(e.target, constraints)
     setInputError(!isValid)
 
@@ -27,7 +23,6 @@ export default () => {
     setFormErrors(formErrors)
   }
 
-
   const formControls = [
     {
       onChangeHandler: handleInputChange,
@@ -37,8 +32,8 @@ export default () => {
       placeholder: 'Email',
       errorMessage: 'Enter valid email',
       constraints: {
-        email: true
-      }
+        email: true,
+      },
     },
     {
       onChangeHandler: handleInputChange,
@@ -48,25 +43,20 @@ export default () => {
       placeholder: 'Password',
       errorMessage: 'Enter valid password',
       constraints: {
-        minLength: 5
-      }
-    }
+        minLength: 5,
+      },
+    },
   ]
   const formButtons = [
     {
-      title: 'Login'
-    }
+      title: 'Login',
+    },
   ]
-
 
   return (
     <div className="page page--full">
       <div className="page__form">
-        <Form
-          title="Authorization"
-          controls={formControls}
-          btns={formButtons}
-        />
+        <Form title="Authorization" controls={formControls} btns={formButtons} />
       </div>
     </div>
   )

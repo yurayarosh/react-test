@@ -6,24 +6,28 @@ export default function ToDoListItem(props) {
   function handleItemDeleteClick() {
     list.splice(index, 1)
     update({
-      toDoListItems: list
-    })    
+      toDoListItems: list,
+    })
   }
 
   function handleItemClick(e) {
-    list[index].done = !list[index].done;
+    list[index].done = !list[index].done
 
     update({
-      toDoListItems: list
-    })    
+      toDoListItems: list,
+    })
   }
 
-  return(
-    <div 
+  return (
+    <div
       className={list[index] && list[index].done ? 'to-do-list-item is-done' : 'to-do-list-item'}
-      >
-      <div className="to-do-list-item__title" onClick={handleItemClick}>{title}</div>
-      <button className="to-do-list-item__btn" onClick={handleItemDeleteClick}>x</button>
+    >
+      <div className="to-do-list-item__title" onClick={handleItemClick}>
+        {title}
+      </div>
+      <button className="to-do-list-item__btn" onClick={handleItemDeleteClick}>
+        x
+      </button>
     </div>
   )
 }
