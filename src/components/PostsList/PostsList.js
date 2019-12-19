@@ -1,5 +1,5 @@
 import React from 'react'
-import Post from '../Post/Post'
+import Post from './Post/Post'
 import './PostList.sass'
 import Input from '../Input/Input'
 import Btn from '../Btn/Btn'

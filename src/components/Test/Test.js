@@ -1,6 +1,6 @@
 import React from 'react'
 import './Test.sass'
-import Question from '../Question/Question'
+import Question from './Question/Question'
 import testQuestions from '../../data/questions'
 import Btn from '../Btn/Btn'
 

@@ -15,6 +15,7 @@ import Blog from './pages/blog/blog'
 import QuestionsTest from './pages/questions-test/questions-test'
 import Auth from './pages/auth/Auth'
 import Layout from './layouts/Layout'
+import Test from './components/Test/Test'
 
 class App extends Component {
   constructor(props) {
@@ -51,6 +52,7 @@ class App extends Component {
                 state={this.state}
                 updateState={this.updateState.bind(this)} />
             </Route>
+            <Route path="/questions-test/:name" component={Test}></Route>
             <Route path="/about">
               <About />
             </Route>

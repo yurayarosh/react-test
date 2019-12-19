@@ -1,0 +1,16 @@
+@import ../../sass/helpers/mixins
+@import ../../sass/helpers/variables
+
+.tests-list
+  font-size: 1.5em
+  &__item
+    margin-bottom: .5em   
+    
+  &__link
+    +tr(color .3s)
+    border: 1px solid $black
+    padding: 0.5em
+    display: block
+    &:hover
+      color: $accent
+  

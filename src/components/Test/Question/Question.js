@@ -1,6 +1,6 @@
 import React from 'react'
 import './Question.sass'
-import { IS_CORRECT, IS_INCORRECT } from '../../helpers/constants'
+import { IS_CORRECT, IS_INCORRECT } from '../../../helpers/constants'
 
 let allowAnswer = true
 
