@@ -74,7 +74,12 @@ export default props => {
             })}
           </div>
 
-          <div className="question__bottom">{`${current + 1} from ${questions.length}`}</div>
+          <div className="question__bottom">
+            <div className="question__btn">{`${current + 1} from ${questions.length}`}</div>
+            <Link to={`/questions-test`} className="question__btn btn">
+              Back to tests list
+            </Link>
+          </div>
         </>
       ) : (
         <>
@@ -103,7 +108,7 @@ export default props => {
           <div className="question__bottom">
             <Btn mod="question__btn" onClickHandler={handleBtnClick}>try again</Btn>
             <Link to={`/questions-test`} className="question__btn btn">
-              All tests
+              Back to tests list
             </Link>
           </div>
         </>
