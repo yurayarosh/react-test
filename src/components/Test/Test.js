@@ -1,20 +1,13 @@
 import React from 'react'
 import './Test.sass'
 import Question from './Question/Question'
-import testQuestions from '../../data/questions'
+import tests from '../../data/questions'
 import Btn from '../Btn/Btn'
 
 export default props => {
-  const { questions, currentQuestion, update, state } = props
-  function handleBtnClick() {
-    update({
-      testQuestions: {
-        current: 0,
-        isFinished: false,
-        list: testQuestions,
-      },
-    })
-  }
+
+  const [test] = tests.filter(tst => tst.id === props.match.params.id)
+
   return (
     <div className="test">
       <div className="test__title">
@@ -22,17 +15,7 @@ export default props => {
       </div>
 
       <div className="test__question">
-        <Question questions={questions} current={currentQuestion} update={update} state={state} />
-
-        {!state.testQuestions.isFinished ? (
-          <div className="test__question-bottom">
-            {`${currentQuestion + 1} from ${questions.length}`}
-          </div>
-        ) : (
-          <div className="test__question-bottom">
-            <Btn onClickHandler={handleBtnClick}>try again</Btn>
-          </div>
-        )}
+        <Question questions={test.questions} />
       </div>
     </div>
   )

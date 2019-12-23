@@ -25,11 +25,11 @@ class App extends Component {
       postsShowNumber: 2,
       posts: [...posts].slice(0, 2),
       toDoListItems: [],
-      testQuestions: {
-        current: 0,
-        isFinished: false,
-        list: questions
-      }
+      // testQuestions: {
+      //   current: 0,
+      //   isFinished: false,
+      //   list: questions
+      // }
     }
   }
 
@@ -47,12 +47,13 @@ class App extends Component {
                 state={this.state}
                 updateState={this.updateState.bind(this)} />
             </Route>
+            <Route path="/questions-test/:id" component={Test}></Route>
             <Route path="/questions-test">
               <QuestionsTest
                 state={this.state}
                 updateState={this.updateState.bind(this)} />
             </Route>
-            <Route path="/questions-test/:name" component={Test}></Route>
+            
             <Route path="/about">
               <About />
             </Route>
