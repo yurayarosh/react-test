@@ -1,8 +1,8 @@
 import React from 'react'
 import Post from './Post/Post'
 import './PostList.sass'
-import Input from '../Input/Input'
-import Btn from '../Btn/Btn'
+import Input from '../Form/Input/Input'
+import Btn from '../Form/Btn/Btn'
 
 export default function PostsList(props) {
   const { list, posts, update, postsShowNumber } = props

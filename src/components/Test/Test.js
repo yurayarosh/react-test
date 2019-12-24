@@ -2,10 +2,8 @@ import React from 'react'
 import './Test.sass'
 import Question from './Question/Question'
 import tests from '../../data/questions'
-import Btn from '../Btn/Btn'
 
 export default props => {
-
   const [test] = tests.filter(tst => tst.id === props.match.params.id)
 
   return (

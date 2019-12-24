@@ -11,6 +11,7 @@ export default props => {
     { to: '/blog', title: 'Blog', exact: false },
     { to: '/questions-test', title: 'Questions Test', exact: false },
     { to: '/auth', title: 'Authorization', exact: false },
+    { to: '/create-test', title: 'Crreate Test', exact: false },
   ]
   return (
     <nav className="nav">

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import './Question.sass'
 import { IS_CORRECT, IS_INCORRECT } from '../../../helpers/constants'
-import Btn from '../../Btn/Btn'
+import Btn from '../../Form/Btn/Btn'
 import { Link } from 'react-router-dom'
 
 let allowAnswer = true
@@ -19,20 +19,20 @@ export default props => {
     allowAnswer = false
     // const questionsList = [...questions]
     questionsList[current].currentAnswer = answer.id
+    setAnswering(!isAnswering) // true
     answer.isHandling = true
-    setAnswering(true)
+
     setQuestionsList(questionsList)
 
     const next = current + 1
     const timeout = window.setTimeout(() => {
+      setAnswering(!isAnswering) // false
       answer.isHandling = false
-      setAnswering(false)
+
       if (current === questions.length - 1) {
         setFinished(true)
-        // setQuestionsList(questionsList)
       } else {
         setCurrent(next)
-        // setQuestionsList(questionsList)
       }
 
       allowAnswer = true
@@ -106,7 +106,9 @@ export default props => {
             })}
           </div>
           <div className="question__bottom">
-            <Btn mod="question__btn" onClickHandler={handleBtnClick}>try again</Btn>
+            <Btn mod="question__btn" onClickHandler={handleBtnClick}>
+              try again
+            </Btn>
             <Link to={`/questions-test`} className="question__btn btn">
               Back to tests list
             </Link>
