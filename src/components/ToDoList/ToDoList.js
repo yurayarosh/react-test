@@ -3,7 +3,7 @@ import ToDoListItem from './ToDoListItem/ToDoListItem'
 import './ToDoList.sass'
 import { TransitionGroup, CSSTransition } from 'react-transition-group'
 import Btn from '../Form/Btn/Btn'
-import Input from '../Form/Btn/Btn'
+import Input from '../Form/Input/Input'
 
 export default function ToDoList({ list, update }) {
   const itemsLeft = list.filter(item => !item.done).length
