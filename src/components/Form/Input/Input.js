@@ -7,7 +7,7 @@ export default props => {
   const {
     name,
     type,
-    id,
+    // id,
     label,
     placeholder,
     mod,
@@ -19,22 +19,27 @@ export default props => {
   } = props
   const [hasError, setInputError] = useState(false)
   const [isTouched, setInputTouch] = useState(false)
-  const isValid = validate(value, constraints)  
+  const [inputValue, setValue] = useState(value)
+  const isValid = validate(value, constraints)
+  const id = `${name}-${new Date().getTime()}`
 
   const className = mod ? `input ${mod}` : 'input'
   const getStaticMod = () => {
     let mod = []
     if (type === 'select') mod.push('input--select')
-    if(isValid) mod.push(`input--${IS_VALID}`)
+    if (isValid) mod.push(`input--${IS_VALID}`)
     return mod.join(' ')
   }
   const cls = [className, getStaticMod()]
 
-  if (isTouched && hasError) cls.push(`input--${HAS_ERROR}`)
-  else if (isTouched) cls.push(`input--${IS_VALID}`)
+  if (isTouched && hasError) {
+    cls.push(`input--${HAS_ERROR}`)
+    const validClassIndex = cls.indexOf(`input--${IS_VALID}`)
+    if(validClassIndex > 0) cls.splice(validClassIndex, 1)
+    
+  } else if (!isValid && isTouched) cls.push(`input--${IS_VALID}`)
 
-  console.log(hasError, name);
-  
+  // console.log(hasError, name);
 
   return (
     <div className={cls.join(' ')}>
@@ -50,10 +55,10 @@ export default props => {
           }
           id={id}
           name={name}
-          value={value}
+          value={inputValue}
           onChange={
             onChangeHandler
-              ? onChangeHandler.bind(this, { ...props, setInputError, setInputTouch })
+              ? onChangeHandler.bind(this, { ...props, id, setInputError, setInputTouch, setValue })
               : null
           }
         >
@@ -72,10 +77,10 @@ export default props => {
           name={name}
           type={type || 'text'}
           placeholder={placeholder}
-          value={value}
+          value={inputValue}
           onChange={
             onChangeHandler
-              ? onChangeHandler.bind(this, { ...props, setInputError, setInputTouch })
+              ? onChangeHandler.bind(this, { ...props, id, setInputError, setInputTouch, setValue })
               : null
           }
         />

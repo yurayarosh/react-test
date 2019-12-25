@@ -9,7 +9,7 @@ export default props => {
   const { mod, title, controls, btns, onSubmit } = props
   const validatedControls = [...controls]
     .filter(control => control.constraints)
-    // .filter(control => !validate(control.value, control.constraints))
+    .filter(control => !validate(control.value, control.constraints))
 
   let formErrors
   validatedControls.forEach(control => {
@@ -18,9 +18,6 @@ export default props => {
       [control.name]: control.constraints,
     })
   })
-
-  console.log(formErrors);
-  
 
   const [errors, setFormErrors] = useState(formErrors)
 

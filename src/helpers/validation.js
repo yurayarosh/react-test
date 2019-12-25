@@ -4,10 +4,12 @@ function validateEmail(email) {
 }
 
 const validate = (input, constraints) => {
-  if (!input) return false
+  if (!input && input !== '') return false
   
   let isValid = false
-  const value = input.value ? input.value.toString() : input.toString()  
+  const value = input.value || input.value === '' ? input.value.toString() : input.toString()
+  // const value = input.value
+  
 
   if (constraints.required && !isValid) {
     isValid = value.trim() !== ''

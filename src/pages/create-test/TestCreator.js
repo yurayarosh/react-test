@@ -1,13 +1,16 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Form from '../../components/Form/Form'
 import validate from '../../helpers/validation'
 
 export default () => {
+  const [questions, setQuestions] = useState([])
+
   const handleInputChange = (
-    { name, constraints, errors, setFormErrors, setInputError, setInputTouch },
+    { value, name, id, constraints, errors, setFormErrors, setInputError, setInputTouch, setValue },
     e
   ) => {
     setInputTouch(true)
+    if (value) setValue(e.target.value)
 
     const isValid = validate(e.target, constraints)
     setInputError(!isValid)
@@ -21,7 +24,30 @@ export default () => {
     }
     setFormErrors(formErrors)
 
-    console.log(formErrors)
+    const isRightInput = id.indexOf(name) > -1
+    const getField = val => (isRightInput ? val : null)
+
+    const title = getField(e.target.value)
+    // const rightAnswer = isRightInput &
+
+    const currentQuestion = {
+      id,
+      title,
+    }
+    
+
+    const questionsList = [...questions, currentQuestion]
+    
+
+    questionsList.forEach(obj => {
+      console.log(obj)
+
+      if(obj.id) console.log(obj.id.indexOf(name) > -1);
+    })
+
+    setQuestions(questionsList)
+
+    console.log(questions)
   }
 
   const onAddQuestionClick = e => {
