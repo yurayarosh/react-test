@@ -7,7 +7,6 @@ export default props => {
   const {
     name,
     type,
-    // id,
     label,
     placeholder,
     mod,
@@ -16,15 +15,13 @@ export default props => {
     constraints,
     errorMessage,
     onChangeHandler,
-    index,
     controlName,
   } = props
   const [hasError, setInputError] = useState(false)
   const [isTouched, setInputTouch] = useState(false)
-  const [inputValue, setValue] = useState(value || '')
   const isValid = validate(value, constraints)
 
-  const id = `${name}-${index || 0}-${new Date().getTime()}`
+  const id = `${name}-${new Date().getTime()}`
 
   const className = mod ? `input ${mod}` : 'input'
   const getStaticMod = () => {
@@ -55,7 +52,7 @@ export default props => {
           }
           id={id}
           name={name}
-          value={inputValue}
+          value={value}
           onChange={
             onChangeHandler
               ? onChangeHandler.bind(this, {
@@ -63,8 +60,6 @@ export default props => {
                   id,
                   setInputError,
                   setInputTouch,
-                  setValue,
-                  inputValue,
                   controlName,
                 })
               : null
@@ -85,7 +80,7 @@ export default props => {
           name={name}
           type={type || 'text'}
           placeholder={placeholder}
-          value={inputValue}
+          value={value}
           onChange={
             onChangeHandler
               ? onChangeHandler.bind(this, {
@@ -93,8 +88,6 @@ export default props => {
                   id,
                   setInputError,
                   setInputTouch,
-                  setValue,
-                  inputValue,
                   controlName,
                 })
               : null

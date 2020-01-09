@@ -10,17 +10,13 @@ export default () => {
       name,
       constraints,
       errors,
-      setFormErrors,
       setInputError,
       setInputTouch,
-      setValue,
       controlName,
     },
     e
   ) => {
     setInputTouch(true)
-
-    setValue(e.target.value)
 
     const isValid = validate(e.target, constraints)
     setInputError(!isValid)
@@ -32,18 +28,17 @@ export default () => {
     } else {
       formErrors[name] = constraints
     }
-    setFormErrors(formErrors)
 
-    const cntrls = { ...formControls }
-    const currentControl = cntrls[controlName]
+    const ctrls = { ...baseControls }
 
-    // currentControl.id = id
+    const currentControl = ctrls[controlName]
+
     currentControl.value = e.target.value
     currentControl.isValid = isValid
 
     setFormControls({
       ...formControls,
-      ...cntrls,
+      ...ctrls,
     })
   }
 
@@ -51,22 +46,26 @@ export default () => {
     e.preventDefault()
     const questions = [...quiz]
     const index = questions.length + 1
-    const {question, rightAnswer} = formControls
+    const { question, rightAnswer, answer1, answer2, answer3, answer4 } = formControls
 
     const questionItem = {
       id: index,
       title: question.value,
       rightAnswer: +rightAnswer.value,
-      // currentAnswer: null,
-      // answers: [
-      //   { isHandling: false, id: 1, title: '48' },
-      //   { isHandling: false, id: 2, title: '12' },
-      //   { isHandling: false, id: 3, title: '18' },
-      //   { isHandling: false, id: 4, title: '24' },
-      // ],
+      answers: [
+        { id: 1, title: answer1.value },
+        { id: 2, title: answer2.value },
+        { id: 3, title: answer3.value },
+        { id: 4, title: answer4.value },
+      ],
     }
 
-    console.log(questionItem)
+    questions.push(questionItem)
+    setQuiz(questions)
+
+    setFormControls(baseControls)
+
+    // console.log(formControls)
   }
 
   const onSubmitHandler = e => {
@@ -74,8 +73,8 @@ export default () => {
     console.log('submit')
   }
 
-  const [formControls, setFormControls] = useState({
-    // {
+  const baseControls = {
+    // title: {
     //   onChangeHandler: handleInputChange,
     //   label: 'Enter test name',
     //   name: 'test-name',
@@ -95,7 +94,7 @@ export default () => {
       placeholder: 'Enter question',
       errorMessage: 'Enter question',
       border: true,
-      value: 'blah',
+      value: '',
       constraints: {
         required: true,
       },
@@ -103,10 +102,9 @@ export default () => {
     answer1: {
       onChangeHandler: handleInputChange,
       label: 'Enter answer variant',
-      name: 'answer',
+      name: 'answer1',
       type: 'text',
       placeholder: 'Answer 1',
-      index: 0,
       errorMessage: 'Enter answer variant',
       constraints: {
         required: true,
@@ -115,10 +113,31 @@ export default () => {
     answer2: {
       onChangeHandler: handleInputChange,
       label: 'Enter answer variant',
-      name: 'answer',
+      name: 'answer2',
       type: 'text',
       placeholder: 'Answer 2',
-      index: 1,
+      errorMessage: 'Enter answer variant',
+      constraints: {
+        required: true,
+      },
+    },
+    answer3: {
+      onChangeHandler: handleInputChange,
+      label: 'Enter answer variant',
+      name: 'answer3',
+      type: 'text',
+      placeholder: 'Answer 3',
+      errorMessage: 'Enter answer variant',
+      constraints: {
+        required: true,
+      },
+    },
+    answer4: {
+      onChangeHandler: handleInputChange,
+      label: 'Enter answer variant',
+      name: 'answer4',
+      type: 'text',
+      placeholder: 'Answer 4',
       errorMessage: 'Enter answer variant',
       constraints: {
         required: true,
@@ -142,7 +161,9 @@ export default () => {
         required: true,
       },
     },
-  })
+  }
+
+  const [formControls, setFormControls] = useState(baseControls)
 
   for (const key in formControls) {
     if (formControls.hasOwnProperty(key)) {

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Input from './Input/Input'
 import Btn from './Btn/Btn'
 import './Form.sass'
@@ -7,11 +7,12 @@ import validate from '../../helpers/validation'
 
 export default props => {
   const { mod, title, controls, btns, onSubmit } = props
+
   const validatedControls = [...Object.values(controls)]
     .filter(control => control.constraints)
     .filter(control => !validate(control.value, control.constraints))
 
-  let formErrors
+  let formErrors = {}
   validatedControls.forEach(control => {
     return (formErrors = {
       ...formErrors,
@@ -19,7 +20,7 @@ export default props => {
     })
   })
 
-  const [errors, setFormErrors] = useState(formErrors)
+  console.log(formErrors)
 
   return (
     <div className={mod ? `form ${mod}` : 'form'}>
@@ -39,14 +40,12 @@ export default props => {
               name={control.name}
               controlName={control.controlName}
               type={control.type}
-              value={control.value}
+              value={control.value || ''}
               index={control.index}
               placeholder={control.placeholder}
               options={control.options}
               errorMessage={control.errorMessage}
               constraints={control.constraints}
-              errors={errors}
-              setFormErrors={setFormErrors}
               onChangeHandler={control.onChangeHandler}
               isValid={control.isValid}
             />
@@ -56,7 +55,16 @@ export default props => {
           <div className="form__field form__btns">
             {btns.map((btn, i) => (
               <div className="form__btn" key={i}>
-                <Btn onClickHandler={btn.onClickHandler} mod={btn.mod}>
+                <Btn
+                  onClickHandler={btn.onClickHandler}
+                  mod={
+                    Object.keys(formErrors).length > 0
+                      ? btns.mod
+                        ? `${btn.mod} btn--${IS_DISABLED}`
+                        : `btn--${IS_DISABLED}`
+                      : btn.mod
+                  }
+                >
                   {btn.title}
                 </Btn>
               </div>
@@ -67,7 +75,7 @@ export default props => {
             <Btn
               onClickHandler={btns[0].onClickHandler}
               mod={
-                Object.keys(errors).length > 0
+                Object.keys(formErrors).length > 0
                   ? btns[0].mod
                     ? `${btns[0].mod} btn--${IS_DISABLED}`
                     : `btn--${IS_DISABLED}`
