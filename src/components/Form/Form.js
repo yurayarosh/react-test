@@ -7,7 +7,7 @@ import validate from '../../helpers/validation'
 
 export default props => {
   const { mod, title, controls, btns, onSubmit } = props
-  const validatedControls = [...controls]
+  const validatedControls = [...Object.values(controls)]
     .filter(control => control.constraints)
     .filter(control => !validate(control.value, control.constraints))
 
@@ -21,22 +21,15 @@ export default props => {
 
   const [errors, setFormErrors] = useState(formErrors)
 
-  // const submitHandler = e => {
-  //   e.preventDefault()
-  // }
-
   return (
-    <div
-      className={mod ? `form ${mod}` : 'form'}
-      // onSubmit={submitHandler}
-    >
+    <div className={mod ? `form ${mod}` : 'form'}>
       <form onSubmit={onSubmit}>
         {title ? (
           <div className="form__title">
             <h2>{title}</h2>
           </div>
         ) : null}
-        {controls.map((control, i) => (
+        {[...Object.values(controls)].map((control, i) => (
           <div
             className={control.border ? 'form__field form__field--border' : 'form__field'}
             key={i}
@@ -44,8 +37,10 @@ export default props => {
             <Input
               label={control.label}
               name={control.name}
+              controlName={control.controlName}
               type={control.type}
               value={control.value}
+              index={control.index}
               placeholder={control.placeholder}
               options={control.options}
               errorMessage={control.errorMessage}

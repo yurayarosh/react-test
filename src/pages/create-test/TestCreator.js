@@ -3,14 +3,24 @@ import Form from '../../components/Form/Form'
 import validate from '../../helpers/validation'
 
 export default () => {
-  const [questions, setQuestions] = useState([])
+  const [quiz, setQuiz] = useState([])
 
   const handleInputChange = (
-    { value, name, id, constraints, errors, setFormErrors, setInputError, setInputTouch, setValue },
+    {
+      name,
+      constraints,
+      errors,
+      setFormErrors,
+      setInputError,
+      setInputTouch,
+      setValue,
+      controlName,
+    },
     e
   ) => {
     setInputTouch(true)
-    if (value) setValue(e.target.value)
+
+    setValue(e.target.value)
 
     const isValid = validate(e.target, constraints)
     setInputError(!isValid)
@@ -24,34 +34,39 @@ export default () => {
     }
     setFormErrors(formErrors)
 
-    const isRightInput = id.indexOf(name) > -1
-    const getField = val => (isRightInput ? val : null)
+    const cntrls = { ...formControls }
+    const currentControl = cntrls[controlName]
 
-    const title = getField(e.target.value)
-    // const rightAnswer = isRightInput &
+    // currentControl.id = id
+    currentControl.value = e.target.value
+    currentControl.isValid = isValid
 
-    const currentQuestion = {
-      id,
-      title,
-    }
-    
-
-    const questionsList = [...questions, currentQuestion]
-    
-
-    questionsList.forEach(obj => {
-      console.log(obj)
-
-      if(obj.id) console.log(obj.id.indexOf(name) > -1);
+    setFormControls({
+      ...formControls,
+      ...cntrls,
     })
-
-    setQuestions(questionsList)
-
-    console.log(questions)
   }
 
   const onAddQuestionClick = e => {
     e.preventDefault()
+    const questions = [...quiz]
+    const index = questions.length + 1
+    const {question, rightAnswer} = formControls
+
+    const questionItem = {
+      id: index,
+      title: question.value,
+      rightAnswer: +rightAnswer.value,
+      // currentAnswer: null,
+      // answers: [
+      //   { isHandling: false, id: 1, title: '48' },
+      //   { isHandling: false, id: 2, title: '12' },
+      //   { isHandling: false, id: 3, title: '18' },
+      //   { isHandling: false, id: 4, title: '24' },
+      // ],
+    }
+
+    console.log(questionItem)
   }
 
   const onSubmitHandler = e => {
@@ -59,7 +74,7 @@ export default () => {
     console.log('submit')
   }
 
-  const formControls = [
+  const [formControls, setFormControls] = useState({
     // {
     //   onChangeHandler: handleInputChange,
     //   label: 'Enter test name',
@@ -72,7 +87,7 @@ export default () => {
     //     required: true,
     //   },
     // },
-    {
+    question: {
       onChangeHandler: handleInputChange,
       label: 'Enter the question',
       name: 'question',
@@ -85,29 +100,31 @@ export default () => {
         required: true,
       },
     },
-    {
+    answer1: {
       onChangeHandler: handleInputChange,
       label: 'Enter answer variant',
-      name: 'answer-1',
+      name: 'answer',
       type: 'text',
       placeholder: 'Answer 1',
+      index: 0,
       errorMessage: 'Enter answer variant',
       constraints: {
         required: true,
       },
     },
-    {
+    answer2: {
       onChangeHandler: handleInputChange,
       label: 'Enter answer variant',
-      name: 'answer-2',
+      name: 'answer',
       type: 'text',
       placeholder: 'Answer 2',
+      index: 1,
       errorMessage: 'Enter answer variant',
       constraints: {
         required: true,
       },
     },
-    {
+    rightAnswer: {
       onChangeHandler: handleInputChange,
       label: 'Enter right answer',
       name: 'right-answer',
@@ -125,7 +142,15 @@ export default () => {
         required: true,
       },
     },
-  ]
+  })
+
+  for (const key in formControls) {
+    if (formControls.hasOwnProperty(key)) {
+      const control = formControls[key]
+      control.controlName = key
+    }
+  }
+
   const formButtons = [
     {
       onClickHandler: onAddQuestionClick,

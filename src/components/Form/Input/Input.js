@@ -16,12 +16,15 @@ export default props => {
     constraints,
     errorMessage,
     onChangeHandler,
+    index,
+    controlName,
   } = props
   const [hasError, setInputError] = useState(false)
   const [isTouched, setInputTouch] = useState(false)
-  const [inputValue, setValue] = useState(value)
+  const [inputValue, setValue] = useState(value || '')
   const isValid = validate(value, constraints)
-  const id = `${name}-${new Date().getTime()}`
+
+  const id = `${name}-${index || 0}-${new Date().getTime()}`
 
   const className = mod ? `input ${mod}` : 'input'
   const getStaticMod = () => {
@@ -35,11 +38,8 @@ export default props => {
   if (isTouched && hasError) {
     cls.push(`input--${HAS_ERROR}`)
     const validClassIndex = cls.indexOf(`input--${IS_VALID}`)
-    if(validClassIndex > 0) cls.splice(validClassIndex, 1)
-    
+    if (validClassIndex > 0) cls.splice(validClassIndex, 1)
   } else if (!isValid && isTouched) cls.push(`input--${IS_VALID}`)
-
-  // console.log(hasError, name);
 
   return (
     <div className={cls.join(' ')}>
@@ -58,7 +58,15 @@ export default props => {
           value={inputValue}
           onChange={
             onChangeHandler
-              ? onChangeHandler.bind(this, { ...props, id, setInputError, setInputTouch, setValue })
+              ? onChangeHandler.bind(this, {
+                  ...props,
+                  id,
+                  setInputError,
+                  setInputTouch,
+                  setValue,
+                  inputValue,
+                  controlName,
+                })
               : null
           }
         >
@@ -80,7 +88,15 @@ export default props => {
           value={inputValue}
           onChange={
             onChangeHandler
-              ? onChangeHandler.bind(this, { ...props, id, setInputError, setInputTouch, setValue })
+              ? onChangeHandler.bind(this, {
+                  ...props,
+                  id,
+                  setInputError,
+                  setInputTouch,
+                  setValue,
+                  inputValue,
+                  controlName,
+                })
               : null
           }
         />

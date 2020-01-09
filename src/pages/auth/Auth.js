@@ -5,10 +5,11 @@ import validate from '../../helpers/validation'
 
 export default () => {
   const handleInputChange = (
-    { name, constraints, errors, setFormErrors, setInputError, setInputTouch },
+    { name, constraints, errors, setFormErrors, setInputError, setInputTouch, setValue },
     e
   ) => {
     setInputTouch(true)
+    setValue(e.target.value)
 
     const isValid = validate(e.target, constraints)
     setInputError(!isValid)
