@@ -1,15 +1,14 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './Auth.sass'
 import Form from '../../components/Form/Form'
 import validate from '../../helpers/validation'
 
 export default () => {
   const handleInputChange = (
-    { name, constraints, errors, setFormErrors, setInputError, setInputTouch },
+    { name, constraints, errors, setFormErrors, setInputError, setInputTouch, controlName },
     e
   ) => {
     setInputTouch(true)
-    // setValue(e.target.value)
 
     const isValid = validate(e.target, constraints)
     setInputError(!isValid)
@@ -22,10 +21,22 @@ export default () => {
       formErrors[name] = constraints
     }
     // setFormErrors(formErrors)
+
+    const ctrls = { ...baseControls }
+
+    const currentControl = ctrls[controlName]
+
+    currentControl.value = e.target.value
+    currentControl.isValid = isValid
+
+    setFormControls({
+      ...formControls,
+      ...ctrls,
+    })
   }
 
-  const formControls = [
-    {
+  const baseControls = {
+    email: {
       onChangeHandler: handleInputChange,
       label: 'Enter Email',
       name: 'email',
@@ -36,7 +47,7 @@ export default () => {
         email: true,
       },
     },
-    {
+    password: {
       onChangeHandler: handleInputChange,
       label: 'Enter password',
       name: 'password',
@@ -47,12 +58,22 @@ export default () => {
         minLength: 5,
       },
     },
-  ]
+  }
+
   const formButtons = [
     {
       title: 'Login',
     },
   ]
+
+  const [formControls, setFormControls] = useState(baseControls)
+
+  for (const key in formControls) {
+    if (formControls.hasOwnProperty(key)) {
+      const control = formControls[key]
+      control.controlName = key
+    }
+  }
 
   return (
     <div className="page page--full">

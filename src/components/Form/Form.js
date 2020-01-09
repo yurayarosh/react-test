@@ -20,8 +20,6 @@ export default props => {
     })
   })
 
-  console.log(formErrors)
-
   return (
     <div className={mod ? `form ${mod}` : 'form'}>
       <form onSubmit={onSubmit}>

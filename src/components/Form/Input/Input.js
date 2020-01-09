@@ -24,19 +24,20 @@ export default props => {
   const id = `${name}-${new Date().getTime()}`
 
   const className = mod ? `input ${mod}` : 'input'
-  const getStaticMod = () => {
-    let mod = []
-    if (type === 'select') mod.push('input--select')
-    if (isValid) mod.push(`input--${IS_VALID}`)
-    return mod.join(' ')
-  }
-  const cls = [className, getStaticMod()]
+  const getMod = () => {
+    let inpMod = []
+    if (type === 'select') inpMod = [...inpMod, 'input--select']
+    if (isValid) inpMod = [...inpMod, `input--${IS_VALID}`]
 
-  if (isTouched && hasError) {
-    cls.push(`input--${HAS_ERROR}`)
-    const validClassIndex = cls.indexOf(`input--${IS_VALID}`)
-    if (validClassIndex > 0) cls.splice(validClassIndex, 1)
-  } else if (!isValid && isTouched) cls.push(`input--${IS_VALID}`)
+    if (isTouched && hasError) {
+      inpMod.push(`input--${HAS_ERROR}`)
+      const validClassIndex = inpMod.indexOf(`input--${IS_VALID}`)
+      if (validClassIndex > 0) inpMod.splice(validClassIndex, 1)
+    }
+
+    return inpMod.join(' ')
+  }
+  const cls = [className, getMod()]
 
   return (
     <div className={cls.join(' ')}>
