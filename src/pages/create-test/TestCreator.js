@@ -4,16 +4,10 @@ import validate from '../../helpers/validation'
 
 export default () => {
   const [quiz, setQuiz] = useState([])
+  const [allowCreateTest, setAllowingCreateTest] = useState(false)
 
   const handleInputChange = (
-    {
-      name,
-      constraints,
-      errors,
-      setInputError,
-      setInputTouch,
-      controlName,
-    },
+    { name, constraints, errors, setInputError, setInputTouch, controlName },
     e
   ) => {
     setInputTouch(true)
@@ -65,7 +59,7 @@ export default () => {
 
     setFormControls(baseControls)
 
-    // console.log(formControls)
+    setAllowingCreateTest(true)
   }
 
   const onSubmitHandler = e => {
@@ -189,7 +183,13 @@ export default () => {
       <h1 className="title title--h1 section__title">Create new test</h1>
 
       <div className="page__form">
-        <Form title="" controls={formControls} btns={formButtons} onSubmit={onSubmitHandler} />
+        <Form
+          title=""
+          controls={formControls}
+          btns={formButtons}
+          onSubmit={onSubmitHandler}
+          allowCreateTest={allowCreateTest}
+        />
       </div>
     </div>
   )

@@ -6,7 +6,7 @@ import { IS_DISABLED } from '../../helpers/constants'
 import validate from '../../helpers/validation'
 
 export default props => {
-  const { mod, title, controls, btns, onSubmit } = props
+  const { mod, title, controls, btns, onSubmit, allowCreateTest } = props
 
   const validatedControls = [...Object.values(controls)]
     .filter(control => control.constraints)
@@ -19,6 +19,14 @@ export default props => {
       [control.name]: control.constraints,
     })
   })
+
+  const setBtnClassname = (btn, condition) => {
+    return condition
+      ? btn.mod
+        ? `${btn.mod} btn--${IS_DISABLED}`
+        : `btn--${IS_DISABLED}`
+      : btn.mod
+  }
 
   return (
     <div className={mod ? `form ${mod}` : 'form'}>
@@ -49,36 +57,34 @@ export default props => {
             />
           </div>
         ))}
-        {btns.length > 1 ? (
+        {btns.length === 2 ? (
           <div className="form__field form__btns">
-            {btns.map((btn, i) => (
-              <div className="form__btn" key={i}>
-                <Btn
-                  onClickHandler={btn.onClickHandler}
-                  mod={
-                    Object.keys(formErrors).length > 0
-                      ? btns.mod
-                        ? `${btn.mod} btn--${IS_DISABLED}`
-                        : `btn--${IS_DISABLED}`
-                      : btn.mod
-                  }
-                >
-                  {btn.title}
-                </Btn>
-              </div>
-            ))}
+            <div className="form__btn">
+              <Btn
+                onClickHandler={btns[0].onClickHandler}
+                mod={setBtnClassname(btns[0], Object.keys(formErrors).length > 0)}
+                disabled={Object.keys(formErrors).length > 0}
+              >
+                {btns[0].title}
+              </Btn>
+            </div>
+
+            <div className="form__btn">
+              <Btn
+                onClickHandler={btns[1].onClickHandler}
+                mod={setBtnClassname(btns[1], !allowCreateTest)}
+                disabled={!allowCreateTest}
+              >
+                {btns[1].title}
+              </Btn>
+            </div>
           </div>
         ) : (
           <div className="form__field">
             <Btn
               onClickHandler={btns[0].onClickHandler}
-              mod={
-                Object.keys(formErrors).length > 0
-                  ? btns[0].mod
-                    ? `${btns[0].mod} btn--${IS_DISABLED}`
-                    : `btn--${IS_DISABLED}`
-                  : btns[0].mod
-              }
+              mod={setBtnClassname(btns[0], Object.keys(formErrors).length > 0)}
+              disabled={Object.keys(formErrors).length > 0}
             >
               {btns[0].title}
             </Btn>
