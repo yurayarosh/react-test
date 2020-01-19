@@ -4,14 +4,31 @@
 .tests-list
   font-size: 1.5em
   &__item
-    margin-bottom: .5em   
+    margin-bottom: .5em
+    position: relative
     
   &__link
     +tr(color .3s, background-color .3s)
     border: 1px solid $black
     padding: 0.5em
+    padding-right: 50px
     display: block
     &:hover
       color: $accent
       background-color: $gray-light
+  &__delete
+    display: flex
+    justify-content: center
+    align-items: center
+
+    width: 50px
+    height: 100%
+
+    position: absolute
+    z-index: 2
+    top: 0
+    right: 0
+    +tr(color .3s)
+    &:hover
+      color: $accent
   

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import './Input.sass'
-import { HAS_ERROR, IS_VALID } from '../../../helpers/constants'
+import { HAS_ERROR, IS_VALID, IS_DISABLED } from '../../../helpers/constants'
 import validate from '../../../helpers/validation'
 
 export default props => {
@@ -8,9 +8,11 @@ export default props => {
     name,
     type,
     label,
+    labelLg,
     placeholder,
     mod,
     value,
+    disabled,
     options,
     constraints,
     errorMessage,
@@ -35,15 +37,17 @@ export default props => {
       if (validClassIndex > 0) inpMod.splice(validClassIndex, 1)
     }
 
+    if(disabled) inpMod.push(`input--${IS_DISABLED}`)
+
     return inpMod.join(' ')
   }
   const cls = [className, getMod()]
 
   return (
     <div className={cls.join(' ')}>
-      {label ? (
-        <label htmlFor={id} className="input__label">
-          {label}
+      {label || labelLg ? (
+        <label htmlFor={id} className={labelLg ? 'input__label input__label--lg' : 'input__label'}>
+          {label || labelLg}
         </label>
       ) : null}
       {type === 'select' ? (
@@ -54,6 +58,7 @@ export default props => {
           id={id}
           name={name}
           value={value}
+          disabled={disabled}
           onChange={
             onChangeHandler
               ? onChangeHandler.bind(this, {
@@ -82,6 +87,7 @@ export default props => {
           type={type || 'text'}
           placeholder={placeholder}
           value={value}
+          disabled={disabled}
           onChange={
             onChangeHandler
               ? onChangeHandler.bind(this, {

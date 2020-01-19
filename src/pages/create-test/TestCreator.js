@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import axios from '../../helpers/axios/quizes'
 import Form from '../../components/Form/Form'
 import validate from '../../helpers/validation'
 
@@ -23,16 +24,22 @@ export default () => {
       formErrors[name] = constraints
     }
 
-    const ctrls = { ...baseControls }
+    // const ctrls = { ...baseControls }
+    const ctrls = Object.assign({}, baseControls)
+
+    console.log(baseControls);
+    
 
     const currentControl = ctrls[controlName]
 
     currentControl.value = e.target.value
     currentControl.isValid = isValid
+    
 
     setFormControls({
       ...formControls,
       ...ctrls,
+      ...{ title: formControls.title },
     })
   }
 
@@ -40,11 +47,11 @@ export default () => {
     e.preventDefault()
     const questions = [...quiz]
     const index = questions.length + 1
-    const { question, rightAnswer, answer1, answer2, answer3, answer4 } = formControls
+    const { title, question, rightAnswer, answer1, answer2, answer3, answer4 } = formControls
 
     const questionItem = {
-      id: index,
       title: question.value,
+      id: index,
       rightAnswer: +rightAnswer.value,
       answers: [
         { id: 1, title: answer1.value },
@@ -57,29 +64,44 @@ export default () => {
     questions.push(questionItem)
     setQuiz(questions)
 
-    setFormControls(baseControls)
-
+    setFormControls({
+      ...baseControls,
+      ...{ title },
+    })
     setAllowingCreateTest(true)
   }
 
   const onSubmitHandler = e => {
     e.preventDefault()
-    console.log('submit')
+
+    axios
+      .post('/quizes.json', {
+        title: formControls.title.value,
+        questions: quiz,
+      })
+      .then(() => {
+        setAllowingCreateTest(false)
+        setQuiz([])
+        setFormControls(baseControls)
+      })
+      .catch(error => {
+        console.error(error)
+      })
   }
 
   const baseControls = {
-    // title: {
-    //   onChangeHandler: handleInputChange,
-    //   label: 'Enter test name',
-    //   name: 'test-name',
-    //   type: 'text',
-    //   placeholder: 'Enter test name',
-    //   errorMessage: 'Enter test name',
-    //   border: true,
-    //   constraints: {
-    //     required: true,
-    //   },
-    // },
+    title: {
+      onChangeHandler: handleInputChange,
+      labelLg: 'Enter test name',
+      name: 'test-name',
+      type: 'text',
+      placeholder: 'Enter test name',
+      errorMessage: 'Enter test name',
+      border: true,
+      constraints: {
+        required: true,
+      },
+    },
     question: {
       onChangeHandler: handleInputChange,
       label: 'Enter the question',
@@ -157,7 +179,7 @@ export default () => {
     },
   }
 
-  const [formControls, setFormControls] = useState(baseControls)
+  const [formControls, setFormControls] = useState({...baseControls})
 
   for (const key in formControls) {
     if (formControls.hasOwnProperty(key)) {
@@ -172,7 +194,6 @@ export default () => {
       title: 'Add question',
     },
     {
-      // onClickHandler: onSubmit,
       title: 'Create test',
       mod: 'btn--secondary',
     },

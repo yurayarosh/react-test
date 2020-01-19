@@ -24,7 +24,7 @@ export default [
           { isHandling: false, id: 1, title: 'One' },
           { isHandling: false, id: 2, title: 'Two' },
           { isHandling: false, id: 3, title: 'Three' },
-          { isHandling: false, id: 4, title: `It does'nt has any whells` },
+          { isHandling: false, id: 4, title: "It does'nt has any whells" },
         ],
       },
       {

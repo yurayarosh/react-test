@@ -43,10 +43,12 @@ export default props => {
           >
             <Input
               label={control.label}
+              labelLg={control.labelLg}
               name={control.name}
               controlName={control.controlName}
               type={control.type}
               value={control.value || ''}
+              disabled={control.disabled}
               index={control.index}
               placeholder={control.placeholder}
               options={control.options}
