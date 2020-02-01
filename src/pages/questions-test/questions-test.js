@@ -1,7 +1,4 @@
 import React, { Component } from 'react'
-// import axios from '../../helpers/axios/quizes'
-// import Test from '../../components/Test/Test'
-// import tests from '../../data/questions'
 import { Link } from 'react-router-dom'
 import './questions-test.sass'
 import { connect } from 'react-redux'
@@ -14,17 +11,6 @@ class QuestionsTest extends Component {
 
   onDeleteClick(id) {
     this.props.deleteQuiz(id, this.props.testsList)
-  //   axios
-  //     .delete(`/quizes/${id}.json`)
-  //     .then(() => {
-  //       const updatedList = this.state.testsList.filter(test => test.id !== id)
-  //       this.setState({
-  //         testsList: updatedList,
-  //       })
-  //     })
-  //     .catch(error => {
-  //       console.error(error)
-  //     })
   }
 
   render() {

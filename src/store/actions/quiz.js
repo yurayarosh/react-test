@@ -1,20 +1,22 @@
-import axios from '../../helpers/axios/quizes'
+// import axios from '../../helpers/axios/quizes'
 import {
   FETCH_QUIZES_START,
   FETCH_QUIZES_SUCCESS,
   FETCH_QUIZES_ERROR,
   DELETE_QUIZ,
 } from './actoinTypes'
+import { BASE_QUIZ_URL } from '../../helpers/fetch/quizes'
 
 export function fetchQuizes() {
   return async dispatch => {
     dispatch(fetchQuizesStart())
     try {
-      const responce = await axios.get('/quizes.json')
+      const response = await fetch( `${BASE_QUIZ_URL}/quizes.json`)
+      const data = await response.json()
 
       const quizes = []
-      Object.keys(responce.data).forEach((name, i) => {
-        const currentTest = Object.values(responce.data)[i]
+      Object.keys(data).forEach((name, i) => {
+        const currentTest = Object.values(data)[i]
         quizes.push({
           id: name,
           title: currentTest.title,
@@ -49,19 +51,19 @@ export function fetchQuizesError() {
 }
 
 export function deleteQuiz(id, list) {
-  return async dispatch => {    
+  return async dispatch => {
     try {
-      const responce = await axios.delete(`/quizes/${id}.json`)
+      await fetch(`${BASE_QUIZ_URL}/quizes/${id}.json`, {
+        method: 'DELETE'
+      })
 
       const updatedList = list.filter(test => test.id !== id)
-      
-
       dispatch({
         type: DELETE_QUIZ,
-        testsList: updatedList
+        testsList: updatedList,
       })
     } catch (error) {
-      console.error(error);
-    }    
+      console.error(error)
+    }
   }
 }
