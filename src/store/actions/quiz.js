@@ -1,9 +1,10 @@
-// import axios from '../../helpers/axios/quizes'
 import {
   FETCH_QUIZES_START,
   FETCH_QUIZES_SUCCESS,
   FETCH_QUIZES_ERROR,
   DELETE_QUIZ,
+  FETCH_QUESTIONS_START,
+  FETCH_QUESTIONS_SUCCESS
 } from './actoinTypes'
 import { BASE_QUIZ_URL } from '../../helpers/fetch/quizes'
 
@@ -26,7 +27,7 @@ export function fetchQuizes() {
 
       dispatch(fetchQuizesSuccess(quizes))
     } catch (error) {
-      dispatch(fetchQuizesError())
+      dispatch(fetchQuizesError(error))
     }
   }
 }
@@ -44,8 +45,9 @@ export function fetchQuizesSuccess(testsList) {
   }
 }
 
-export function fetchQuizesError() {
+export function fetchQuizesError(error) {
   return {
+    error,
     type: FETCH_QUIZES_ERROR,
   }
 }
@@ -65,5 +67,37 @@ export function deleteQuiz(id, list) {
     } catch (error) {
       console.error(error)
     }
+  }
+}
+
+export function fetchQuestions(id) {
+  return async dispatch => {
+    dispatch(fetchQuestionsStart())
+    try {
+      const response = await fetch(`${BASE_QUIZ_URL}/quizes.json`)
+      const data = await response.json()
+
+      const test = data[id]
+      if (!test) return
+
+      const questions = test.questions
+      
+      dispatch(fetchQuestionsSuccess(questions))
+    } catch (error) {
+      console.error(error);
+    }
+  }
+}
+
+export function fetchQuestionsStart() {
+  return {
+    type: FETCH_QUESTIONS_START
+  }
+}
+
+export function fetchQuestionsSuccess(questions) {
+  return {
+    questions,
+    type: FETCH_QUESTIONS_SUCCESS
   }
 }

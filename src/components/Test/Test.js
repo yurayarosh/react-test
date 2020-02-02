@@ -1,27 +1,12 @@
 import React, { Component } from 'react'
 import './Test.sass'
 import Question from './Question/Question'
-import axios from 'axios'
-// import tests from '../../data/questions'
+import { connect } from 'react-redux'
+import { fetchQuestions } from '../../store/actions/quiz'
 
-export default class Test extends Component {
-  state = {
-    questions: [],
-    isLoaded: false,
-  }
-
+class Test extends Component {
   componentDidMount() {
-    axios.get('https://react-test-c7da4.firebaseio.com/quizes.json').then(responce => {
-      const test = responce.data[this.props.match.params.id]
-      if (!test) return
-
-      const questions = test.questions
-
-      this.setState({
-        questions,
-        isLoaded: true,
-      })
-    })
+    this.props.fetchQuestions(this.props.match.params.id)
   }
 
   render() {
@@ -32,8 +17,8 @@ export default class Test extends Component {
         </div>
 
         <div className="test__question">
-          {this.state.questions.length > 0 ? (
-            <Question questions={this.state.questions} />
+          {!this.props.isLoading && this.props.questions.length > 0 ? (
+            <Question questions={this.props.questions} />
           ) : (
             'loading...'
           )}
@@ -42,3 +27,18 @@ export default class Test extends Component {
     )
   }
 }
+
+function mapStateToProps(state) {
+  return {
+    questions: state.quiz.questions,
+    isLoading: state.quiz.isLoading,
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    fetchQuestions: id => dispatch(fetchQuestions(id)),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Test)
