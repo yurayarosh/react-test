@@ -6,7 +6,7 @@ import { IS_DISABLED } from '../../helpers/constants'
 import validate from '../../helpers/validation'
 
 export default props => {
-  const { mod, title, controls, btns, onSubmit, allowCreateTest } = props
+  const { mod, title, controls, btns, onSubmit, allowCreateTest, auth } = props
 
   const validatedControls = [...Object.values(controls)]
     .filter(control => control.constraints)
@@ -59,7 +59,7 @@ export default props => {
             />
           </div>
         ))}
-        {btns.length === 2 ? (
+        {!auth ? (
           <div className="form__field form__btns">
             <div className="form__btn">
               <Btn
@@ -82,14 +82,26 @@ export default props => {
             </div>
           </div>
         ) : (
-          <div className="form__field">
-            <Btn
-              onClickHandler={btns[0].onClickHandler}
-              mod={setBtnClassname(btns[0], Object.keys(formErrors).length > 0)}
-              disabled={Object.keys(formErrors).length > 0}
-            >
-              {btns[0].title}
-            </Btn>
+          <div className="form__field form__btns">
+            <div className="form__btn">
+              <Btn
+                onClickHandler={btns[0].onClickHandler}
+                mod={setBtnClassname(btns[0], Object.keys(formErrors).length > 0)}
+                disabled={Object.keys(formErrors).length > 0}
+              >
+                {btns[0].title}
+              </Btn>
+            </div>
+
+            <div className="form__btn">
+              <Btn
+                onClickHandler={btns[1].onClickHandler}
+                mod={setBtnClassname(btns[1], Object.keys(formErrors).length > 0)}
+                disabled={Object.keys(formErrors).length > 0}
+              >
+                {btns[1].title}
+              </Btn>
+            </div>
           </div>
         )}
       </form>

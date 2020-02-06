@@ -2,8 +2,10 @@ import React, { useState } from 'react'
 import './Auth.sass'
 import Form from '../../components/Form/Form'
 import validate from '../../helpers/validation'
+import { connect } from 'react-redux'
+import { auth } from '../../store/actions/auth'
 
-export default () => {
+function Auth(props) {
   const handleInputChange = (
     { name, constraints, errors, setFormErrors, setInputError, setInputTouch, controlName },
     e
@@ -35,6 +37,24 @@ export default () => {
     })
   }
 
+  function onSignInHandler(e) {
+    e.preventDefault()
+    props.auth({
+      email: formControls.email.value,
+      password: formControls.password.value,
+      isLogin: true
+    })
+  }
+
+  function onSignUpHandler(e) {
+    e.preventDefault()
+    props.auth({
+      email: formControls.email.value,
+      password: formControls.password.value,
+      isLogin: false
+    })
+  }
+
   const baseControls = {
     email: {
       onChangeHandler: handleInputChange,
@@ -62,7 +82,13 @@ export default () => {
 
   const formButtons = [
     {
+      onClickHandler: onSignInHandler,
       title: 'Login',
+    },
+    {
+      onClickHandler: onSignUpHandler,
+      title: 'Signup',
+      mod: 'btn--secondary',
     },
   ]
 
@@ -78,8 +104,16 @@ export default () => {
   return (
     <div className="page page--full">
       <div className="page__form">
-        <Form title="Authorization" controls={formControls} btns={formButtons} />
+        <Form auth={true} title="Authorization" controls={formControls} btns={formButtons} />
       </div>
     </div>
   )
 }
+
+function mapDispatchToProps(dispatch) {
+  return {
+    auth: ({ email, password, isLogin }) => dispatch(auth({ email, password, isLogin })),
+  }
+}
+
+export default connect(null, mapDispatchToProps)(Auth)
