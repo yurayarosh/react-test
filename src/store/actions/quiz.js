@@ -3,7 +3,6 @@ import {
   FETCH_QUIZES_SUCCESS,
   FETCH_QUIZES_ERROR,
   DELETE_QUIZ,
-  FETCH_QUESTIONS_START,
   FETCH_QUESTIONS_SUCCESS
 } from './actoinTypes'
 import { BASE_QUIZ_URL } from '../../helpers/fetch/quizes'
@@ -72,7 +71,7 @@ export function deleteQuiz(id, list) {
 
 export function fetchQuestions(id) {
   return async dispatch => {
-    dispatch(fetchQuestionsStart())
+    dispatch(fetchQuizesStart())
     try {
       const response = await fetch(`${BASE_QUIZ_URL}/quizes.json`)
       const data = await response.json()
@@ -89,11 +88,6 @@ export function fetchQuestions(id) {
   }
 }
 
-export function fetchQuestionsStart() {
-  return {
-    type: FETCH_QUESTIONS_START
-  }
-}
 
 export function fetchQuestionsSuccess(questions) {
   return {

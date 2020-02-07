@@ -1,53 +1,15 @@
-import React, { useState } from 'react'
+import React from 'react'
 import './Question.sass'
 import { IS_CORRECT, IS_INCORRECT } from '../../../helpers/constants'
 import Btn from '../../Form/Btn/Btn'
 import { Link } from 'react-router-dom'
 
-let allowAnswer = true
-
 export default props => {
-  const { questions } = props
-  const [isFinished, setFinished] = useState(false)
-  const [current, setCurrent] = useState(0)
-  const [questionsList, setQuestionsList] = useState([...questions])
-  const [isAnswering, setAnswering] = useState(false)
-
-  function handleAnswerClick(answer) {
-    if (!allowAnswer) return
-    if (current > questions.length) return
-    allowAnswer = false
-    // const questionsList = [...questions]
-    questionsList[current].currentAnswer = answer.id
-    setAnswering(!isAnswering) // true
-    answer.isHandling = true
-
-    setQuestionsList(questionsList)
-
-    const next = current + 1
-    const timeout = window.setTimeout(() => {
-      setAnswering(!isAnswering) // false
-      answer.isHandling = false
-
-      if (current === questions.length - 1) {
-        setFinished(true)
-      } else {
-        setCurrent(next)
-      }
-
-      allowAnswer = true
-      window.clearTimeout(timeout)
-    }, 500)
-  }
-  function handleBtnClick() {
-    setFinished(false)
-    setCurrent(0)
-    setQuestionsList(questionsList)
-  }
+  const { questions, current, handleAnswerClick, handleBtnClick, isFinished } = props
 
   return (
     <div className="question">
-      {!isFinished ? (
+      {!isFinished && questions.length > 0 ? (
         <>
           <div className="question__title">
             <h3 className="title title--h3">{questions[current].title}?</h3>

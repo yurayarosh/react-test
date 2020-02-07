@@ -5,8 +5,65 @@ import { connect } from 'react-redux'
 import { fetchQuestions } from '../../store/actions/quiz'
 
 class Test extends Component {
-  componentDidMount() {
-    this.props.fetchQuestions(this.props.match.params.id)
+  state = {
+    questions: [...this.props.questions],
+    allowAnswer: true,
+    current: 0,
+    isFinished: false,
+  }
+
+  handleAnswerClick(answer) {
+    const { allowAnswer, current, questions } = this.state
+
+    this.setState({
+      allowAnswer: false,
+    })
+
+    if (!allowAnswer) return
+    if (current > this.state.questions.length) return
+
+    const questionsList = [...questions]
+    questionsList[current].currentAnswer = answer.id
+    answer.isHandling = true
+
+    this.setState({
+      questions: questionsList,
+    })
+
+    const next = current + 1
+    setTimeout(() => {
+      answer.isHandling = false
+
+      if (current === questions.length - 1) {
+        this.setState({
+          isFinished: true,
+        })
+      } else {
+        this.setState({
+          current: next,
+        })
+      }
+
+      this.setState({
+        allowAnswer: true,
+      })
+    }, 500)
+  }
+
+  handleBtnClick() {
+    this.setState({
+      isFinished: false,
+      current: 0,
+      questions: [...this.props.questions],
+    })
+  }
+
+  async componentDidMount() {
+    await this.props.fetchQuestions(this.props.match.params.id)
+
+    this.setState({
+      questions: this.props.questions,
+    })
   }
 
   render() {
@@ -18,7 +75,13 @@ class Test extends Component {
 
         <div className="test__question">
           {!this.props.isLoading && this.props.questions.length > 0 ? (
-            <Question questions={this.props.questions} />
+            <Question
+              questions={this.state.questions}
+              current={this.state.current}
+              isFinished={this.state.isFinished}
+              handleAnswerClick={this.handleAnswerClick.bind(this)}
+              handleBtnClick={this.handleBtnClick.bind(this)}
+            />
           ) : (
             'loading...'
           )}

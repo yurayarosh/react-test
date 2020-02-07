@@ -3,7 +3,6 @@ import {
   FETCH_QUIZES_SUCCESS,
   FETCH_QUIZES_ERROR,
   DELETE_QUIZ,
-  FETCH_QUESTIONS_START,
   FETCH_QUESTIONS_SUCCESS,
 } from '../actions/actoinTypes'
 
@@ -37,11 +36,6 @@ export default function quizReducer(state = initialState, action) {
       return {
         ...state,
         testsList: action.testsList,
-      }
-    case FETCH_QUESTIONS_START:
-      return {
-        ...state,
-        isLoading: true,
       }
     case FETCH_QUESTIONS_SUCCESS:
       return {
