@@ -17,6 +17,7 @@ import Auth from './pages/auth/Auth'
 import Layout from './layouts/Layout'
 import Test from './components/Test/Test'
 import TestCreator from './pages/create-test/TestCreator'
+import { connect } from 'react-redux'
 
 class App extends Component {
   constructor(props) {
@@ -44,11 +45,11 @@ class App extends Component {
         <Layout>
           <Switch>
             <Route path="/auth">
-              <Auth state={this.state} updateState={this.updateState.bind(this)} />
+              <Auth  />
             </Route>
             <Route path="/questions-test/:id" component={Test}></Route>
             <Route path="/questions-test">
-              <QuestionsTest state={this.state} updateState={this.updateState.bind(this)} />
+              <QuestionsTest  />
             </Route>
 
             <Route path="/about">
@@ -58,10 +59,10 @@ class App extends Component {
               <Blog state={this.state} updateState={this.updateState.bind(this)} />
             </Route>            
             <Route path="/create-test">
-              <TestCreator state={this.state} updateState={this.updateState.bind(this)} />
+              <TestCreator  />
             </Route>
             <Route path="/">
-              <Home state={this.state} updateState={this.updateState.bind(this)} />
+              <Home  state={this.state} updateState={this.updateState.bind(this)} />
             </Route>
           </Switch>
         </Layout>
@@ -69,5 +70,11 @@ class App extends Component {
     )
   }
 }
+
+// function mapStateToProps(state) {
+//   return {
+//     isAuthenticated: !!state.auth.token
+//   }
+// }
 
 export default App

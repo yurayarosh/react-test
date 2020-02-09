@@ -1,5 +1,4 @@
 import React from 'react'
-// import Layout from '../../layouts/Layout'
 import PostsList from '../../components/PostsList/PostsList'
 import posts from '../../data/posts'
 

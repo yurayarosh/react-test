@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import Nav from '../Nav/Nav'
 import './Header.sass'
 import { IS_OPEN, IS_ACTIVE } from '../../helpers/constants'
-// import { IS_OPEN } from '../../helpers/constants'
+import HeaderUser from './HeaderUser'
 
 export default () => {
   const [isOpen, setOpen] = useState(false)
@@ -27,6 +27,8 @@ export default () => {
             <span></span>
           </button>
         </div>
+        
+       <HeaderUser mod="header__user" />
       </div>
     </header>
   )
