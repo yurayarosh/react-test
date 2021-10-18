@@ -1,0 +1,75 @@
+html,
+body {
+  height: 100%;
+}
+
+html {
+  font-size: $base-fz + px;
+  line-height: 1.4;
+  color: $c-text;
+
+  background-color: $light;
+
+  @include reg;
+}
+
+body {
+  min-width: 320px;
+}
+
+* {
+  outline-color: $black;
+}
+
+.icon,
+.svg-icon {
+  display: inline-block;
+  fill: currentColor;
+  font-size: inherit;
+}
+
+.lazy {
+  $this: &;
+
+  &--loaded:not(#{$this}--no-fade-in) {
+    animation: fade-in 1s;
+  }
+}
+
+.container {
+  width: 100%;
+  max-width: 90%;
+
+  margin-left: auto;
+  margin-right: auto;
+
+  padding-left: $gap-container + px;
+  padding-right: $gap-container + px;
+
+  @include xxxl {
+    max-width: $base-container + $gap-container * 2 + px;
+  }
+
+  &--md {
+    max-width: $base-container--md + $gap-container * 2 + px;
+  }
+
+  &--xs {
+    max-width: $base-container--sm + $gap-container * 2 + px;
+  }
+}
+
+.close {
+  @include icon-close(2em, 0.1em, currentColor);
+  transition: color 0.4s;
+
+  outline: 0;
+
+  @include hover-focus {
+    color: $accent;
+  }
+}
+
+.overflow-hidden {
+  overflow: hidden;
+}

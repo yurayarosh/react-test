@@ -1,0 +1,17 @@
+@use 'sass:math';
+
+@function em($size, $context: $base-fz) {
+  @return math.div($size, $context) * 1em;
+}
+
+@function rem($size, $context: $base-fz) {
+  @return math.div($size, $context) * 1rem;
+}
+
+@function vw($size, $context: $base-desktop) {
+  @return math.div($size, $context) * 100vw;
+}
+
+@function vh($size, $context: $base-desktop-height) {
+  @return math.div($size, $context) * 100vh;
+}

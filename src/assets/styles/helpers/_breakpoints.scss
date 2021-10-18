@@ -1,0 +1,95 @@
+@mixin xxxl {
+  @include r(1919) {
+    @content;
+  }
+}
+
+@mixin xxl {
+  @include r(1699) {
+    @content;
+  }
+}
+
+@mixin xl {
+  @include r($base-container + $gap-container * 2 - 1) {
+    @content;
+  }
+}
+
+@mixin lg {
+  @include r(1199) {
+    @content;
+  }
+}
+
+@mixin md {
+  @include r(991) {
+    @content;
+  }
+}
+
+@mixin sm {
+  @include r(767) {
+    @content;
+  }
+}
+
+@mixin xs {
+  @include r(575) {
+    @content;
+  }
+}
+
+@mixin xxs {
+  @include r(413) {
+    @content;
+  }
+}
+
+@mixin xxxlmin {
+  @include rmin(1920) {
+    @content;
+  }
+}
+
+@mixin xxlmin {
+  @include rmin(1700) {
+    @content;
+  }
+}
+
+@mixin xlmin {
+  @include rmin($base-container + $gap-container * 2) {
+    @content;
+  }
+}
+
+@mixin lgmin {
+  @include rmin(1200) {
+    @content;
+  }
+}
+
+@mixin mdmin {
+  @include rmin(992) {
+    @content;
+  }
+}
+
+@mixin smmin {
+  @include rmin(768) {
+    @content;
+  }
+}
+
+@mixin xsmin {
+  @include rmin(576) {
+    @content;
+  }
+}
+
+@mixin xxsmin {
+  @include rmin(414) {
+    @content;
+  }
+}
