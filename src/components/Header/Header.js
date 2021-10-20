@@ -1,8 +1,19 @@
 import classNames from 'classnames'
 import { Link } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { menuSlice } from '../../store/slices/menuSlice'
 
 const Header = ({ className, ...attrs }) => {
   const cls = classNames('header', className)
+
+  const dispatch = useDispatch()
+  const hasOpenMenu = useSelector(state => state.menu.isOpen)
+
+  const onBurgerClick = () => {
+    dispatch(menuSlice.actions.toggle())
+
+    console.log(hasOpenMenu)
+  }
 
   return (
     <header className={cls} {...attrs}>
@@ -20,6 +31,10 @@ const Header = ({ className, ...attrs }) => {
           </li>
         </ul>
       </nav>
+
+      <button type="button" onClick={onBurgerClick}>
+        open menu
+      </button>
     </header>
   )
 }

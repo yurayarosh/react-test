@@ -1,6 +1,9 @@
 import React from 'react'
 import { render, hydrate } from 'react-dom'
 import App from './App'
+import store from './store'
+import { Provider } from 'react-redux'
+
 import './assets/styles/app.scss'
 
 // render(
@@ -13,7 +16,17 @@ import './assets/styles/app.scss'
 const rootElement = document.getElementById('root')
 
 if (rootElement.hasChildNodes()) {
-  hydrate(<App />, rootElement)
+  hydrate(
+    <Provider store={store}>
+      <App />
+    </Provider>,
+    rootElement
+  )
 } else {
-  render(<App />, rootElement)
+  render(
+    <Provider store={store}>
+      <App />
+    </Provider>,
+    rootElement
+  )
 }
