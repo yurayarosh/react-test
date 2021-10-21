@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux'
-import menu from './menu'
+import menuReducer from '../slices/menuSlice'
 
 const rootReducer = combineReducers({
-  menu,
+  menu: menuReducer,
 })
 
 export default rootReducer

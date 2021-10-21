@@ -2,6 +2,7 @@ import classNames from 'classnames'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { menuSlice } from '../../store/slices/menuSlice'
+import Menu from '../Menu/Menu'
 
 const Header = ({ className, ...attrs }) => {
   const cls = classNames('header', className)
@@ -35,6 +36,10 @@ const Header = ({ className, ...attrs }) => {
       <button type="button" onClick={onBurgerClick}>
         open menu
       </button>
+
+      {
+        hasOpenMenu ? <Menu /> : ''
+      }
     </header>
   )
 }
