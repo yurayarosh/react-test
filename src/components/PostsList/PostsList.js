@@ -13,6 +13,8 @@ const PostsList = ({ list: allList } = {}) => {
     setFilterValue(e.target.value)
   }
 
+  console.log('component rendered')
+
   return (
     <>
       <input type="text" placeholder="Start typing here." onInput={onInput} />

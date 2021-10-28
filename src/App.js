@@ -15,6 +15,7 @@ function App() {
 
   useEffect(() => {
     getRoutes()
+    // eslint-disable-next-line
   }, [])
 
   return (
@@ -23,13 +24,13 @@ function App() {
         <Layout>
           {routesList.length > 0
             ? routesList.map(({ path, meta, component: Component, ...attrs }) => (
-                  <Route
-                    key={path}
-                    path={path}
-                    render={props => <Component meta={meta} {...props} />}
-                    {...attrs}
-                  />
-                ))
+                <Route
+                  key={path}
+                  path={path}
+                  render={props => <Component meta={meta} {...props} />}
+                  {...attrs}
+                />
+              ))
             : ''}
         </Layout>
       </Router>

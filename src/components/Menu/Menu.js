@@ -20,6 +20,7 @@ function Menu() {
     return () => {
       document.removeEventListener('keyup', onKeyUp)
     }
+    // eslint-disable-next-line
   }, [])
 
   return (
